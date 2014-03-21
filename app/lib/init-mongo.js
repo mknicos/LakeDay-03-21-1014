@@ -22,4 +22,3 @@ exports.db = function(fn){
     fn();
   });
 };
-

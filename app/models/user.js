@@ -9,6 +9,7 @@ function User(user){
   this.userName = user.userName;
   this.password = user.password;
   this.email = user.email;
+  this.lakeDay = user.lakeDay || false;
 }
 
 User.prototype.register = function(fn){
@@ -65,5 +66,13 @@ User.findById = function(id, fn){
   console.log(_id);
   users.findOne({_id:_id}, function(err, record){
     fn(record);
+  });
+};
+
+//funtion takes a boolean, and returns all users
+//with a lakeDay value of that boolean
+User.findByLakeDay = function(bool, fn){
+  users.find({lakeDay:bool}).toArray(function(err, records){
+      fn(records);
   });
 };

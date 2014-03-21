@@ -20,7 +20,7 @@ describe('User', function(){
   });
   beforeEach(function(done){
     global.nss.db.dropDatabase(function(err, result){
-      var userObj = {userName:'Test Person', email: 'test@nomail.com', password:'1234'};
+      var userObj = {userName:'Test Person', email: 'test@nomail.com', password:'1234', lakeDay:true};
       user2 = new User(userObj);
       user2.register(function(err){
         done();
@@ -88,11 +88,7 @@ describe('User', function(){
   describe('.findById', function(){
     it('should return a user by thier id', function(done){
       var id = user2._id.toString();
-      console.log('id>>>>>>>>>>');
-      console.log(id);
       User.findById(id, function(record){
-        console.log('record>>>>>>>>');
-        console.log(record);
         expect(record.userName).to.equal('Test Person');
         expect(record.email).to.equal('test@nomail.com');
         done();
@@ -100,4 +96,19 @@ describe('User', function(){
     });
   });
 
+  describe('.findByLakeDay', function(){
+    it('should return all users with a lakeDay value as specified', function(done){
+      //Test is run assuming 'Test Person', from before each is already
+      //in database and has a lake day value of true
+      var userObj = {userName:'Bobby Smith', email:'bobbySmith@nomail.com', password:'abcd', isOnLake:false};
+      var u1 = new User(userObj);
+      u1.register(function(err){
+        User.findByLakeDay(true, function(users){
+          expect(users[0].userName).to.equal('Test Person');
+          expect(users.length).to.equal(1);
+          done();
+        });
+      });
+    });
+  });
 });

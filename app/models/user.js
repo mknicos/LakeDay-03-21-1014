@@ -12,6 +12,7 @@ function User(user){
   this.lakeDay = user.lakeDay || false;
 }
 
+
 User.prototype.register = function(fn){
   var self = this;
   hashPassword(self.password, function(hashedPwd){
@@ -45,6 +46,11 @@ function insert(user, fn){
 }
 
 User.findByEmailAndPassword = function(email, password, fn){
+
+  //checks to authenticate user for login
+  //input->email, and password
+  //returns whole user object if a match
+
   users.findOne({email:email}, function(err, record){
     if(!record){
       fn(null);
@@ -61,18 +67,18 @@ User.findByEmailAndPassword = function(email, password, fn){
 };
 
 User.findById = function(id, fn){
+  //input-> User Id String
+  //returns-> One complete User Object
   var _id = Mongo.ObjectID(id);
-  console.log('_id');
-  console.log(_id);
   users.findOne({_id:_id}, function(err, record){
     fn(record);
   });
 };
 
-//funtion takes a boolean, and returns all users
-//with a lakeDay value of that boolean
 User.findByLakeDay = function(bool, fn){
+  //input->Boolean
+  //Returns->Array of user objects
   users.find({lakeDay:bool}).toArray(function(err, records){
-      fn(records);
+    fn(records);
   });
 };

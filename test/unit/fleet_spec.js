@@ -87,4 +87,55 @@ describe('Fleet', function(){
       });
     });
   });
+
+  describe('#findById', function(){
+    it('should find a Fleet by its id', function(done){
+      var fleetObj = {fleetName:'Pumpkin Spice'};
+      var f1 = new Fleet(fleetObj);
+      var fleetObj2 = {fleetName:'Awesome Boats'};
+      var f2 = new Fleet(fleetObj2);
+      f1.insert(function(){
+        f2.insert(function(){
+          Fleet.findById(f2._id.toHexString(), function(record){
+            expect(record.fleetName).to.equal('Awesome Boats');
+            done();
+          });
+        });
+      });
+    });
+  });
+
+  describe('.addUser', function(){
+    it('should add a user to the fleets users array', function(done){
+      var fleetObj = {fleetName:'Pumpkin Spice'};
+      var f1 = new Fleet(fleetObj);
+      f1.insert(function(){
+        Fleet.addUser(f1._id.toString(), testUser1._id.toString(), function(count){
+          expect(count).to.equal(1);
+          Fleet.findById(f1._id.toString(), function(record){
+            expect(record.users.length).to.equal(1);
+            expect(record.users[0].toString()).to.equal(testUser1._id.toString());
+            done();
+          });
+        });
+      });
+    });
+
+    it('should not add a user to the fleets users array, already a member', function(done){
+      var fleetObj = {fleetName:'Pumpkin Spice'};
+      var f1 = new Fleet(fleetObj);
+      f1.insert(function(){
+        Fleet.addUser(f1._id.toString(), testUser1._id.toString(), function(count1){
+          Fleet.addUser(f1._id.toString(), testUser1._id.toString(), function(count2){
+            expect(count2).to.equal('already member');
+            Fleet.findById(f1._id.toString(), function(record){
+              expect(record.users.length).to.equal(1);
+              done();
+            });
+          });
+        });
+      });
+    });
+
+  });
 });

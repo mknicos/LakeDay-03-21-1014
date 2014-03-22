@@ -2,7 +2,7 @@
 
 var Mongo = require('mongodb');
 var fleets = global.nss.db.collection('fleets');
-
+var _ = require('lodash');
 module.exports = Fleet;
 
 function Fleet(fleet){
@@ -37,5 +37,41 @@ Fleet.prototype.updateCaptain = function(userId, fn){
   var uId = Mongo.ObjectID(userId);
   fleets.update({_id:fleetId}, {$set: {captain:uId}}, function(err, count){
     fn(count);
+  });
+};
+
+Fleet.findById = function(fleetId, fn){
+  var _id = Mongo.ObjectID(fleetId);
+  fleets.findOne({_id:_id}, function(err, record){
+    fn(record);
+  });
+};
+
+
+Fleet.addUser = function(fleetId, userId, fn){
+  //input-> userId string, fleetId string
+  //output-> count
+  var uId = Mongo.ObjectID(userId);
+  var fId = Mongo.ObjectID(fleetId);
+  Fleet.findById(fleetId.toString(), function(record){
+    console.log('record.users');
+    console.log(record.users);
+    for(var i = 0; i < record.users.length; i++){
+     //need to print out the string versions of all user object Ids in fleet.users array 
+    }
+    var isMember = _.contains(record.users, uId);
+    console.log('isMember');
+    console.log(isMember);
+    if(!isMember){
+      console.log('not a member yet');
+      record.users.push(uId);
+      console.log(record.users);
+      fleets.update({_id:fId}, {$set: {users:record.users}}, function(err, count){
+        fn(count);
+      });
+    }else{
+      console.log('already member');
+      fn('already member');
+    }
   });
 };

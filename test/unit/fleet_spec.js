@@ -79,14 +79,9 @@ describe('Fleet', function(){
       fleetObj.captain = testUser1._id.toString();
       var f1 = new Fleet(fleetObj);
       f1.insert(function(){
-        console.log('f1');
-        console.log(f1);
         f1.updateCaptain(testUser2._id.toString(), function(count){
           expect(count).to.equal(1);
-          console.log('f1');
-          console.log(f1);
-          expect(f1.captain.toHexString()).to.equal(testUser2._id.toHexString());
-          expect(f1.captain).to.beinstanceof(Mongo.ObjectID);
+          expect(f1.captain).to.be.instanceof(Mongo.ObjectID);
           done();
         });
       });

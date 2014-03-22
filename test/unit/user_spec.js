@@ -6,7 +6,7 @@ var expect = require('chai').expect;
 var Mongo = require('mongodb');
 
 //--global varables--//
-var User, user2;
+var User, Boat, user2;
 
 describe('User', function(){
 
@@ -15,6 +15,7 @@ describe('User', function(){
     var initMongo = require('../../app/lib/init-mongo');
     initMongo.db(function(){
       User = require('../../app/models/user');
+      Boat = require('../../app/models/boat');
       done();
     });
   });
@@ -111,4 +112,23 @@ describe('User', function(){
       });
     });
   });
+
+  describe('.addBoat', function(){
+    it('should add a boat to a users boats owned array', function(done){
+      var boatObj2 = {boatName:'Bruised Pink', make:'Hobie Cat', boatType:'motor', year:'1978', ownerId:'111111111111111111111111', description:'Not So Awesome Boat'};
+      var boat2 = new Boat(boatObj2);
+      boat2.insert(function(){
+        User.addBoat(user2._id.toString(), boat2._id.toString(), function(count){
+          expect(count).to.equal(1);
+          User.findById(user2._id.toString(), function(record){
+            expect(record.boatsOwned.length).to.equal(1);
+            expect(record.boatsOwned[0].boatName).to.equal('Bruised Pink');
+            done();
+          });
+        });
+      });
+    });
+  });
+
+
 });

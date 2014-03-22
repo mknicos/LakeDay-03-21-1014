@@ -10,6 +10,7 @@ function User(user){
   this.password = user.password;
   this.email = user.email;
   this.lakeDay = user.lakeDay || false;
+  this.boatsOwned = [];
 }
 
 
@@ -80,5 +81,18 @@ User.findByLakeDay = function(bool, fn){
   //Returns->Array of user objects
   users.find({lakeDay:bool}).toArray(function(err, records){
     fn(records);
+  });
+};
+
+User.addBoat = function(userId, boatId, fn){
+  //input-> userId String, boatId String
+  //output-> count, 1 if success
+
+  boatId = Mongo.ObjectId(boatId);
+  User.findById(userId, function(record){
+    record.boatsOwned.push(boatId);
+    users.update({_id:record.userId}, {$set: {boatsOwned:record.boatsOwned}}, function(err, count){
+      fn(count);
+    });
   });
 };

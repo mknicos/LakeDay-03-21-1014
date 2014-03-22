@@ -16,7 +16,8 @@ function Boat(boat){
 
 Boat.prototype.insert = function(fn){
   //input->Boat Instance
-  //returns->nothing if success, 'duplicate' string if boat name already exists
+  //returns->boats array of inserted boats if success,
+  //'duplicate' string if boat name already exists
 
   var self = this;
   boats.findOne({boatName:this.boatName}, function(err, boat){

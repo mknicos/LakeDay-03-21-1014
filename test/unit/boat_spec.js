@@ -87,17 +87,69 @@ describe('Boat', function(){
       var boatObj3 = {boatName:'Crazy Boat', make:'Hobie Cat', boatType:'Sailboat', year:'1978', ownerId:'999999999999999999999999', description:'Not So Awesome Boat'};
       var boat3 = new Boat(boatObj3);
       boat2.insert(function(one){
-        console.log(one);
         boat3.insert(function(two){
-          console.log(two);
           Boat.findByOwnerId('999999999999999999999999', function(boats){
-            console.log('boats>>>');
-            console.log(boats);
             expect(boats.length).to.equal(2);
             done();
           });
         });
       });
     });
+    it('should not return any boats because owner has no boats', function(done){
+      Boat.findByOwnerId('333333333333333333333333', function(boats){
+        expect(boats.length).to.equal(0);
+        done();
+      });
+    });
   });
+
+  describe('.findAll', function(){
+    it('should return all boats in the database', function(done){
+      var boatObj2 = {boatName:'Bruised Pink', make:'Hobie Cat', boatType:'Sailboat', year:'1978', ownerId:'111111111111111111111111', description:'Not So Awesome Boat'};
+      var boat2 = new Boat(boatObj2);
+      var boatObj3 = {boatName:'Crazy Boat', make:'Hobie Cat', boatType:'Sailboat', year:'1978', ownerId:'999999999999999999999999', description:'Not So Awesome Boat'};
+      var boat3 = new Boat(boatObj3);
+      boat2.insert(function(){
+        boat3.insert(function(){
+          Boat.findAll(function(records){
+            expect(records.length).to.equal(3);
+            done();
+          });
+        });
+      });
+    });
+  });
+
+  describe('.deleteById', function(){
+    it('should delete a boat from the database', function(done){
+      var boatObj2 = {boatName:'Bruised Pink', make:'Hobie Cat', boatType:'Sailboat', year:'1978', ownerId:'111111111111111111111111', description:'Not So Awesome Boat'};
+      var boat2 = new Boat(boatObj2);
+      var boatObj3 = {boatName:'Crazy Boat', make:'Hobie Cat', boatType:'Sailboat', year:'1978', ownerId:'999999999999999999999999', description:'Not So Awesome Boat'};
+      var boat3 = new Boat(boatObj3);
+      boat2.insert(function(){
+        boat3.insert(function(){
+          Boat.deleteById(boat2._id.toString(), function(count){
+            Boat.findAll(function(records){
+              expect(records.length).to.equal(2);
+              expect(count).to.equal(1);
+              done();
+            });
+          });
+        });
+      });
+    });
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
 });

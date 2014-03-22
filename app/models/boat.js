@@ -42,12 +42,22 @@ Boat.findById = function(id, fn){
 Boat.findByOwnerId = function(id, fn){
   //input-> User Id String
   //returns-> array of boat objects with one owner
-  console.log('id before');
-  console.log(id);
+
   var _id = new Mongo.ObjectID(id);
-  console.log(_id);
   boats.find({ownerId:_id}).toArray(function(err, records){
-    console.log(records);
     fn(records);
+  });
+};
+
+Boat.findAll = function(fn){
+  boats.find().toArray(function(err, records){
+    fn(records);
+  });
+};
+
+Boat.deleteById = function(id, fn){
+  var _id = Mongo.ObjectID(id);
+  boats.remove({_id:_id}, function(err, count){
+    fn(count);
   });
 };

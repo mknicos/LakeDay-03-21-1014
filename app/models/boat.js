@@ -9,7 +9,7 @@ function Boat(boat){
   this.boatName = boat.boatName; //string
   this.year = parseInt(boat.year); //integer
   this.boatType = boat.boatType; //string
-  this.owner = Mongo.ObjectID(boat.owner); //MongoId of user
+  this.ownerId = Mongo.ObjectID(boat.ownerId); //MongoId of user
   this.description = boat.description; //string
 }
 
@@ -36,5 +36,18 @@ Boat.findById = function(id, fn){
   var _id = Mongo.ObjectID(id);
   boats.findOne({_id:_id}, function(err, record){
     fn(record);
+  });
+};
+
+Boat.findByOwnerId = function(id, fn){
+  //input-> User Id String
+  //returns-> array of boat objects with one owner
+  console.log('id before');
+  console.log(id);
+  var _id = new Mongo.ObjectID(id);
+  console.log(_id);
+  boats.find({ownerId:_id}).toArray(function(err, records){
+    console.log(records);
+    fn(records);
   });
 };

@@ -3,7 +3,7 @@
 
 process.env.DBNAME = 'mochaTest-lakeDay';
 var expect = require('chai').expect;
-//var Mongo = require('mongodb');
+var Mongo = require('mongodb');
 
 //--global varables--//
 var Boat, boat1;
@@ -20,7 +20,7 @@ describe('Boat', function(){
 
   beforeEach(function(done){
     global.nss.db.dropDatabase(function(err, result){
-      var boatObj = {boatName:'Pumpkin Spice', make:'Hobie Cat', boatType:'Sailboat', year:'1978', description:'Not So Awesome Boat'};
+      var boatObj = {boatName:'Pumpkin Spice', make:'Hobie Cat', boatType:'Sailboat', year:'1978', ownerId:'999999999999999999999999', description:'Not So Awesome Boat'};
       boat1 = new Boat(boatObj);
       boat1.insert(function(){
         done();
@@ -30,11 +30,12 @@ describe('Boat', function(){
 
   describe('new', function(){
     it('should create a new User Object', function(){
-      var boatObj = {boatName:'Mer Mer', make:'Hobie Cat', boatType:'Sailboat', year:'1985', description:'Awesome Boat'};
+      var boatObj = {boatName:'Mer Mer', make:'Hobie Cat', boatType:'Sailboat', year:'1985', ownerId:'999999999999999999999999', description:'Awesome Boat'};
       var b1 = new Boat(boatObj);
       expect(b1).to.be.instanceof(Boat);
       expect(b1.boatName).to.equal('Mer Mer');
       expect(b1.boatType).to.equal('Sailboat');
+      expect(b1.ownerId).to.be.instanceof(Mongo.ObjectID);
     });
   });
 
@@ -76,4 +77,27 @@ describe('Boat', function(){
     });
   });
 
+  describe('.findByOwnerId', function(){
+    //boat with owner id of 2's is in before each
+    //added one more here with owner id of 2's
+    //and one without, should return 2 boats
+    it('should return boats based on their owner id', function(done){
+      var boatObj2 = {boatName:'Bruised Pink', make:'Hobie Cat', boatType:'Sailboat', year:'1978', ownerId:'111111111111111111111111', description:'Not So Awesome Boat'};
+      var boat2 = new Boat(boatObj2);
+      var boatObj3 = {boatName:'Crazy Boat', make:'Hobie Cat', boatType:'Sailboat', year:'1978', ownerId:'999999999999999999999999', description:'Not So Awesome Boat'};
+      var boat3 = new Boat(boatObj3);
+      boat2.insert(function(one){
+        console.log(one);
+        boat3.insert(function(two){
+          console.log(two);
+          Boat.findByOwnerId('999999999999999999999999', function(boats){
+            console.log('boats>>>');
+            console.log(boats);
+            expect(boats.length).to.equal(2);
+            done();
+          });
+        });
+      });
+    });
+  });
 });

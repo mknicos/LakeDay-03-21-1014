@@ -88,10 +88,14 @@ User.addBoat = function(userId, boatId, fn){
   //input-> userId String, boatId String
   //output-> count, 1 if success
 
-  boatId = Mongo.ObjectId(boatId);
-  User.findById(userId, function(record){
-    record.boatsOwned.push(boatId);
-    users.update({_id:record.userId}, {$set: {boatsOwned:record.boatsOwned}}, function(err, count){
+  var bId = Mongo.ObjectID(boatId);
+  User.findById(userId.toString(), function(record){
+    console.log('recordInFindBy');
+    console.log(record);
+    record.boatsOwned.push(bId);
+    console.log(record);
+    var id = Mongo.ObjectID(record._id.toString());
+    users.update({_id:id}, {$set: {boatsOwned:record.boatsOwned}}, function(err, count){
       fn(count);
     });
   });

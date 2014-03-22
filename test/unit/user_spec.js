@@ -119,10 +119,14 @@ describe('User', function(){
       var boat2 = new Boat(boatObj2);
       boat2.insert(function(){
         User.addBoat(user2._id.toString(), boat2._id.toString(), function(count){
-          expect(count).to.equal(1);
+          console.log('count>>>>>');
+          console.log(count);
           User.findById(user2._id.toString(), function(record){
+            console.log('record>>>>>');
+            console.log(record);
+            expect(count).to.equal(1);
             expect(record.boatsOwned.length).to.equal(1);
-            expect(record.boatsOwned[0].boatName).to.equal('Bruised Pink');
+            expect(record.boatsOwned[0]).to.be.instanceof(Mongo.ObjectID);
             done();
           });
         });

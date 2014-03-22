@@ -11,6 +11,7 @@ function Boat(boat){
   this.boatType = boat.boatType; //string
   this.ownerId = Mongo.ObjectID(boat.ownerId); //MongoId of user
   this.description = boat.description; //string
+  this.make = boat.make; //string
 }
 
 Boat.prototype.insert = function(fn){
@@ -59,5 +60,27 @@ Boat.deleteById = function(id, fn){
   var _id = Mongo.ObjectID(id);
   boats.remove({_id:_id}, function(err, count){
     fn(count);
+  });
+};
+
+Boat.findByBoatType = function(boatType, fn){
+  boats.find({boatType:boatType}).toArray(function(err, records){
+    fn(records);
+  });
+};
+
+Boat.findByBoatName = function(boatName, fn){
+  //input->One Boat Name
+  //output->Boat object
+  boats.findOne({boatName:boatName}, function(err, record){
+    fn(record);
+  });
+};
+
+Boat.findByBoatMake = function(make, fn){
+  //input->One Boat Make
+  //output->Aray of boats with that make
+  boats.find({make:make}).toArray(function(err, records){
+    fn(records);
   });
 };

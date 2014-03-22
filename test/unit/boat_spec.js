@@ -20,7 +20,7 @@ describe('Boat', function(){
 
   beforeEach(function(done){
     global.nss.db.dropDatabase(function(err, result){
-      var boatObj = {boatName:'Pumpkin Spice', make:'Hobie Cat', boatType:'Sailboat', year:'1978', ownerId:'999999999999999999999999', description:'Not So Awesome Boat'};
+      var boatObj = {boatName:'Pumpkin Spice', make:'Hobie Cat', boatType:'motor', year:'1978', ownerId:'999999999999999999999999', description:'Not So Awesome Boat'};
       boat1 = new Boat(boatObj);
       boat1.insert(function(){
         done();
@@ -140,7 +140,61 @@ describe('Boat', function(){
     });
   });
 
+  describe('.findByBoatType', function(){
+    //test is assuming one boat of type 'motor' is inputed in before each
+    it('should find all boats of a given type', function(done){
+      var boatObj2 = {boatName:'Bruised Pink', make:'Hobie Cat', boatType:'motor', year:'1978', ownerId:'111111111111111111111111', description:'Not So Awesome Boat'};
+      var boat2 = new Boat(boatObj2);
+      var boatObj3 = {boatName:'Crazy Boat', make:'Hobie Cat', boatType:'Sailboat', year:'1978', ownerId:'999999999999999999999999', description:'Not So Awesome Boat'};
+      var boat3 = new Boat(boatObj3);
+      boat2.insert(function(){
+        boat3.insert(function(){
+          Boat.findByBoatType('motor', function(boats){
+            expect(boats.length).to.equal(2);
+            expect(boats[0].boatType).to.equal('motor');
+            done();
+          });
+        });
+      });
+    });
+  });
 
+  describe('.findByBoatName', function(){
+    it('should return all boats with a given name', function(done){
+      var boatObj2 = {boatName:'Bruised Pink', make:'Hobie Cat', boatType:'motor', year:'1978', ownerId:'111111111111111111111111', description:'Not So Awesome Boat'};
+      var boat2 = new Boat(boatObj2);
+      var boatObj3 = {boatName:'Crazy Boat', make:'Hobie Cat', boatType:'Sailboat', year:'1978', ownerId:'999999999999999999999999', description:'Not So Awesome Boat'};
+      var boat3 = new Boat(boatObj3);
+      boat2.insert(function(){
+        boat3.insert(function(){
+          Boat.findByBoatName('Bruised Pink', function(record){
+            expect(record.boatType).to.equal('motor');
+            expect(record.ownerId.toString()).to.equal('111111111111111111111111');
+            expect(record.boatName).to.equal('Bruised Pink');
+            done();
+          });
+        });
+      });
+    });
+  });
+
+  describe('.findByBoatMake', function(){
+    it('should return all boats with a given make', function(done){
+      var boatObj2 = {boatName:'Bruised Pink', make:'Hobie Cat', boatType:'motor', year:'1978', ownerId:'111111111111111111111111', description:'Not So Awesome Boat'};
+      var boat2 = new Boat(boatObj2);
+      var boatObj3 = {boatName:'Crazy Boat', make:'Olympic', boatType:'Sailboat', year:'1978', ownerId:'999999999999999999999999', description:'Not So Awesome Boat'};
+      var boat3 = new Boat(boatObj3);
+      boat2.insert(function(){
+        boat3.insert(function(){
+          Boat.findByBoatMake('Hobie Cat', function(records){
+            expect(records.length).to.equal(2);
+            expect(records[0].boatName).to.not.equal('Crazy Boat');
+            done();
+          });
+        });
+      });
+    });
+  });
 
 
 

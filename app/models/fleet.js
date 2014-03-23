@@ -2,7 +2,7 @@
 
 var Mongo = require('mongodb');
 var fleets = global.nss.db.collection('fleets');
-var _ = require('lodash');
+//var _ = require('lodash');
 module.exports = Fleet;
 
 function Fleet(fleet){
@@ -50,28 +50,30 @@ Fleet.findById = function(fleetId, fn){
 
 Fleet.addUser = function(fleetId, userId, fn){
   //input-> userId string, fleetId string
-  //output-> count
+  //output-> count or 'already member'
   var uId = Mongo.ObjectID(userId);
   var fId = Mongo.ObjectID(fleetId);
-  Fleet.findById(fleetId.toString(), function(record){
-    console.log('record.users');
-    console.log(record.users);
-    for(var i = 0; i < record.users.length; i++){
-     //need to print out the string versions of all user object Ids in fleet.users array 
-    }
-    var isMember = _.contains(record.users, uId);
-    console.log('isMember');
-    console.log(isMember);
-    if(!isMember){
-      console.log('not a member yet');
-      record.users.push(uId);
-      console.log(record.users);
-      fleets.update({_id:fId}, {$set: {users:record.users}}, function(err, count){
-        fn(count);
-      });
-    }else{
+
+  checkForMember(fId, uId, function(isMember){
+    if(isMember){
       console.log('already member');
-      fn('already member');
+      return fn('already member');
+    }else{
+      console.log('new member');
+      Fleet.findById(fleetId.toString(), function(record){
+        record.users.push(uId);
+        fleets.update({_id:fId}, {$set: {users:record.users}}, function(err, count){
+          fn(count);
+        });
+      });
     }
   });
 };
+
+function checkForMember(fleetId, userId, fn){
+  //checks to see if user is already a member of fleet
+
+  fleets.findOne({_id:fleetId, users:userId}, function(err, record){
+    fn(record);
+  });
+}

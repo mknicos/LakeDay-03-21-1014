@@ -1,5 +1,12 @@
 extends ../shared/template
 
 block content
-  h1= title
+  .jumbotron(style='background-image:url("/img/dev/openLake.jpg")')
+    h1.homeTitle= title
+    p.homeP It's not always a lake day, but if you always wish it was, you are in the right place
+    blockquote(class="pull-right")
+      p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+        small Someone famous in
+         cite(title="Source Title") Source Title
+
 

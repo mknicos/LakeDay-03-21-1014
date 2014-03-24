@@ -29,6 +29,7 @@ Fleet.prototype.insert = function(fn){
         fn(record);
       });
     }else{ //if boat name already exists
+      console.log('duplicate boat name attempted to be added');
       fn('duplicate');
     }
   });
@@ -65,7 +66,6 @@ Fleet.addUser = function(fleetId, userId, fn){
       console.log('already member');
       return fn('already member');
     }else{
-      console.log('new member');
       User.findById(userId.toString(), function(userRecord){
           userRecord.fleets.push(fId);
           users.update({_id:uId}, {$set: {fleets:userRecord.fleets}}, function(err, count){
@@ -104,5 +104,15 @@ Fleet.prototype.addFlag = function(oldpath){
 Fleet.findAll = function(fn){
   fleets.find().toArray(function(err, records){
     fn(records);
+  });
+};
+
+Fleet.findUsers = function(fleetId, fn){
+  //input->fleetId string
+  //output->User objects in array
+  Fleet.findById(fleetId, function(record){
+    users.find({_id: {$in: record.users}}).toArray(function(err, users){
+      fn(users);
+    });
   });
 };

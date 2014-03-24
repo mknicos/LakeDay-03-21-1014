@@ -9,7 +9,7 @@ var exec = require('child_process').exec;
 
 //--globalVariables--//
 var User, Boat, Fleet; //models
-var testUser1, testUser2;//test users and boats
+var testUser1, testUser2, testUser3;//test users and boats
 
 
 describe('Fleet', function(){
@@ -30,9 +30,13 @@ describe('Fleet', function(){
       testUser1 = new User(userObj);
       var userObj2 = {userName:'Another Person', email: 'test2@nomail.com', password:'abcd', lakeDay:false};
       testUser2 = new User(userObj2);
+      var userObj3 = {userName:'Chase', email: 'test3@nomail.com', password:'abcd', lakeDay:false};
+      testUser3 = new User(userObj3);
       testUser1.register(function(err){
         testUser2.register(function(err){
-          done();
+          testUser3.register(function(err){
+            done();
+          });
         });
       });
     });
@@ -160,12 +164,29 @@ describe('Fleet', function(){
       });
     });
   });
+
+  describe('.findUsers', function(){
+    it('should return the user objects that are apart of the fleet', function(done){
+      var fleetObj = {fleetName:'superpeople'};
+      var f1 = new Fleet(fleetObj);
+      f1.insert(function(){
+        console.log(testUser3._id);
+        Fleet.addUser(f1._id.toString(), testUser1._id.toString(), function(){
+          Fleet.addUser(f1._id.toString(), testUser3._id.toString(), function(){
+            Fleet.findUsers(f1._id.toString(), function(records){
+              expect(records.length).to.equal(2);
+              done();
+            });
+          });
+        });
+      });
+    });
+  });
   
   describe('.addFlag', function(){
     beforeEach(function(done){
       var testdir = __dirname + '/../../app/static/img/fleets/test*';
       var cmd = 'rm -rf ' + testdir;
-
       exec(cmd, function(){
         var origfile = __dirname + '/../fixtures/myFlag.jpg';
         var copyfile = __dirname + '/../fixtures/myFlag-copy.jpg';
@@ -178,7 +199,6 @@ describe('Fleet', function(){
       var fleetObj = {};
       fleetObj.fleetName = 'Test Super Sailers';
       var f1 = new Fleet(fleetObj);
-
       var oldname = __dirname + '/../fixtures/myFlag-copy.jpg';
       f1.addFlag(oldname);
       expect(f1.fleetFlag).to.equal('/img/fleets/testsupersailers/flag.jpg');

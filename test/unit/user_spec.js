@@ -160,7 +160,7 @@ describe('User', function(){
       done();
     });
   });
-  
+
   describe('.findFleets', function(){
     it('should return the fleet objects the user has joined', function(){
       var fleetObj = {fleetName:'superpeople'};

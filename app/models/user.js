@@ -79,6 +79,7 @@ User.findByEmailAndPassword = function(email, password, fn){
 
   users.findOne({email:email}, function(err, record){
     if(!record){
+      console.log('email not found');
       fn(null);
     }else{
       bcrypt.compare(password, record.password, function(err, res){

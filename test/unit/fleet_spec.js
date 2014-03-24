@@ -107,8 +107,25 @@ describe('Fleet', function(){
     });
   });
 
+  describe('#findAll', function(){
+    it('should find all Fleets', function(done){
+      var fleetObj = {fleetName:'Pumpkin Spice'};
+      var f1 = new Fleet(fleetObj);
+      var fleetObj2 = {fleetName:'Awesome Boats'};
+      var f2 = new Fleet(fleetObj2);
+      f1.insert(function(){
+        f2.insert(function(){
+          Fleet.findAll(function(records){
+            expect(records.length).to.equal(2);
+            done();
+          });
+        });
+      });
+    });
+  });
+
   describe('.addUser', function(){
-    it('should add a user to the fleets users array', function(done){
+    it('should add a user to the fleets users array, and a fleet to the users array', function(done){
       var fleetObj = {fleetName:'Pumpkin Spice'};
       var f1 = new Fleet(fleetObj);
       f1.insert(function(){
@@ -117,7 +134,11 @@ describe('Fleet', function(){
           Fleet.findById(f1._id.toString(), function(record){
             expect(record.users.length).to.equal(1);
             expect(record.users[0].toString()).to.equal(testUser1._id.toString());
-            done();
+            User.findById(testUser1._id.toString(), function(userRecord){
+              expect(userRecord.fleets.length).to.equal(1);
+              expect(userRecord.fleets[0].toString()).to.equal(f1._id.toString());
+              done();
+            });
           });
         });
       });

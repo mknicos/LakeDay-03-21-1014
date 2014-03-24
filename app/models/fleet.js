@@ -2,8 +2,10 @@
 
 var Mongo = require('mongodb');
 var fleets = global.nss.db.collection('fleets');
+var users = global.nss.db.collection('users');
 var fs = require('fs');
 var path = require('path');
+var User = require('./user');
 
 module.exports = Fleet;
 
@@ -11,6 +13,7 @@ function Fleet(fleet){
   this.fleetName = fleet.fleetName;
   this.users = [];
   this.captain = new Mongo.ObjectID(fleet._id);
+  this.description = fleet.description;
 }
 
 
@@ -53,6 +56,7 @@ Fleet.findById = function(fleetId, fn){
 Fleet.addUser = function(fleetId, userId, fn){
   //input-> userId string, fleetId string
   //output-> count or 'already member'
+  //THIS adds user to fleets array and fleet to users array
   var uId = Mongo.ObjectID(userId);
   var fId = Mongo.ObjectID(fleetId);
 
@@ -62,12 +66,17 @@ Fleet.addUser = function(fleetId, userId, fn){
       return fn('already member');
     }else{
       console.log('new member');
-      Fleet.findById(fleetId.toString(), function(record){
-        record.users.push(uId);
-        fleets.update({_id:fId}, {$set: {users:record.users}}, function(err, count){
-          fn(count);
+      User.findById(userId.toString(), function(userRecord){
+          userRecord.fleets.push(fId);
+          users.update({_id:uId}, {$set: {fleets:userRecord.fleets}}, function(err, count){
+            Fleet.findById(fleetId.toString(), function(fleetRecord){
+              fleetRecord.users.push(uId);
+              fleets.update({_id:fId}, {$set: {users:fleetRecord.users}}, function(err, count){
+                fn(count);
+              });
+            });
+          });
         });
-      });
     }
   });
 };
@@ -90,4 +99,10 @@ Fleet.prototype.addFlag = function(oldpath){
   fs.renameSync(oldpath, abspath + relpath);
 
   this.fleetFlag = relpath;
+};
+
+Fleet.findAll = function(fn){
+  fleets.find().toArray(function(err, records){
+    fn(records);
+  });
 };

@@ -8,7 +8,7 @@ var fs = require('fs');
 var exec = require('child_process').exec;
 
 //--global varables--//
-var User, Boat, user2;
+var User, Boat, Fleet, user2;
 
 describe('User', function(){
 
@@ -18,6 +18,7 @@ describe('User', function(){
     initMongo.db(function(){
       User = require('../../app/models/user');
       Boat = require('../../app/models/boat');
+      Fleet = require('../../app/models/fleet');
       done();
     });
   });
@@ -157,6 +158,32 @@ describe('User', function(){
       u1.addPhoto(oldname);
       expect(u1.userPhoto).to.equal('/img/users/testmattmattcom/photo.jpg');
       done();
+    });
+  });
+  
+  describe('.findFleets', function(){
+    it('should return the fleet objects the user has joined', function(){
+      var fleetObj = {fleetName:'superpeople'};
+      var f1 = new Fleet(fleetObj);
+      var fleetObj2 = {fleetName:'awesome sailors'};
+      var f2 = new Fleet(fleetObj2);
+      var fleetObj3 = {fleetName:'lets go'};
+      var f3 = new Fleet(fleetObj3);
+      f1.insert(function(){
+        f2.insert(function(){
+          f3.insert(function(){
+            Fleet.addUser(f1._id.toString(), user2._id.toString(), function(){
+              Fleet.addUser(f2._id.toString(), user2._id.toString(), function(){
+                User.findFleets(user2._id.toString(), function(records){
+                  console.log('fleets array records');
+                  console.log(records);
+                  expect(records.length).to.equal(2);
+                });
+              });
+            });
+          });
+        });
+      });
     });
   });
 });

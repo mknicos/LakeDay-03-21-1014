@@ -1,6 +1,7 @@
 'use strict';
 var bcrypt = require('bcrypt');
 var users = global.nss.db.collection('users');
+var fleets = global.nss.db.collection('fleets');
 var Mongo = require('mongodb');
 var fs = require('fs');
 var path = require('path');
@@ -14,6 +15,7 @@ function User(user){
   this.lakeDay = user.lakeDay || false;
   this.boatsOwned = [];
   this.userPhoto = user.userPhoto;
+  this.fleets = [];
 }
 
 
@@ -117,6 +119,16 @@ User.addBoat = function(userId, boatId, fn){
     var id = Mongo.ObjectID(record._id.toString());
     users.update({_id:id}, {$set: {boatsOwned:record.boatsOwned}}, function(err, count){
       fn(count);
+    });
+  });
+};
+
+User.findFleets = function(userId, fn){
+  //input->userId string
+  //output->fleet objects in array
+  User.findById(userId, function(record){
+    fleets.find({_id: {$in: record.fleets}}).toArray(function(err, fleets){
+      fn(fleets);
     });
   });
 };

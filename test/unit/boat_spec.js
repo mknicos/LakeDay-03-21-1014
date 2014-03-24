@@ -4,6 +4,8 @@
 process.env.DBNAME = 'mochaTest-lakeDay';
 var expect = require('chai').expect;
 var Mongo = require('mongodb');
+var fs = require('fs');
+var exec = require('child_process').exec;
 
 //--global varables--//
 var Boat, boat1;
@@ -193,6 +195,32 @@ describe('Boat', function(){
           });
         });
       });
+    });
+  });
+  
+  describe('.addPhoto', function(){
+    beforeEach(function(done){
+      var testdir = __dirname + '/../../app/static/img/boats/test*';
+      var cmd = 'rm -rf ' + testdir;
+
+      exec(cmd, function(){
+        var origfile = __dirname + '/../fixtures/guitarBoat.jpg';
+        var copyfile = __dirname + '/../fixtures/guitarBoat-copy.jpg';
+        fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile));
+        done();
+      });
+    });
+
+    it('should add a photo to the boat', function(done){
+      var boatObj = {};
+      boatObj.boatName = 'Test Mer Mer She Wrote';
+      boatObj.year = 1995;
+      var b1 = new Boat(boatObj);
+
+      var oldname = __dirname + '/../fixtures/guitarBoat-copy.jpg';
+      b1.addPhoto(oldname);
+      expect(b1.boatPhoto).to.equal('/img/boats/testmermershewrote/photo.jpg');
+      done();
     });
   });
 });

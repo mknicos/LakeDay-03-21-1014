@@ -2,6 +2,8 @@
 
 var Mongo = require('mongodb');
 var boats = global.nss.db.collection('boats');
+var fs = require('fs');
+var path = require('path');
 
 module.exports = Boat;
 
@@ -84,4 +86,17 @@ Boat.findByBoatMake = function(make, fn){
   boats.find({make:make}).toArray(function(err, records){
     fn(records);
   });
+};
+
+
+Boat.prototype.addPhoto = function(oldpath){
+  var dirname = this.boatName.replace(/\W/g,'').toLowerCase();
+  var abspath = __dirname + '/../static';
+  var relpath = '/img/boats/' + dirname;
+  fs.mkdirSync(abspath + relpath);
+  var extension = path.extname(oldpath);
+  relpath += '/photo' + extension;
+  fs.renameSync(oldpath, abspath + relpath);
+
+  this.boatPhoto = relpath;
 };

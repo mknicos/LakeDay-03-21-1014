@@ -142,7 +142,7 @@ describe('Fleet', function(){
   
   describe('.addFlag', function(){
     beforeEach(function(done){
-      var testdir = __dirname + '/../../app/static/img/flags/test*';
+      var testdir = __dirname + '/../../app/static/img/fleets/test*';
       var cmd = 'rm -rf ' + testdir;
 
       exec(cmd, function(){

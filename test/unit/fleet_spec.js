@@ -4,6 +4,8 @@
 process.env.DBNAME = 'mochaTest-lakeDay';
 var expect = require('chai').expect;
 var Mongo = require('mongodb');
+var fs = require('fs');
+var exec = require('child_process').exec;
 
 //--globalVariables--//
 var User, Boat, Fleet; //models
@@ -136,6 +138,30 @@ describe('Fleet', function(){
         });
       });
     });
+  });
+  
+  describe('.addFlag', function(){
+    beforeEach(function(done){
+      var testdir = __dirname + '/../../app/static/img/flags/test*';
+      var cmd = 'rm -rf ' + testdir;
 
+      exec(cmd, function(){
+        var origfile = __dirname + '/../fixtures/myFlag.jpg';
+        var copyfile = __dirname + '/../fixtures/myFlag-copy.jpg';
+        fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile));
+        done();
+      });
+    });
+
+    it('should add a flag to a fleet', function(done){
+      var fleetObj = {};
+      fleetObj.fleetName = 'Test Super Sailers';
+      var f1 = new Fleet(fleetObj);
+
+      var oldname = __dirname + '/../fixtures/myFlag-copy.jpg';
+      f1.addFlag(oldname);
+      expect(f1.fleetFlag).to.equal('/img/fleets/testsupersailers/flag.jpg');
+      done();
+    });
   });
 });

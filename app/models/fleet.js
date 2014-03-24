@@ -2,7 +2,9 @@
 
 var Mongo = require('mongodb');
 var fleets = global.nss.db.collection('fleets');
-//var _ = require('lodash');
+var fs = require('fs');
+var path = require('path');
+
 module.exports = Fleet;
 
 function Fleet(fleet){
@@ -77,3 +79,15 @@ function checkForMember(fleetId, userId, fn){
     fn(record);
   });
 }
+
+Fleet.prototype.addFlag = function(oldpath){
+  var dirname = this.fleetName.replace(/\W/g,'').toLowerCase();
+  var abspath = __dirname + '/../static';
+  var relpath = '/img/fleets/' + dirname;
+  fs.mkdirSync(abspath + relpath);
+  var extension = path.extname(oldpath);
+  relpath += '/flag' + extension;
+  fs.renameSync(oldpath, abspath + relpath);
+
+  this.fleetFlag = relpath;
+};

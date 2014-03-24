@@ -51,15 +51,11 @@ function insert(user, fn){
 
 User.prototype.addPhoto = function(oldpath){
   var dirname = this.email.replace(/\W/g,'').toLowerCase();
-  console.log('dirname');
-  console.log(dirname);
   var abspath = __dirname + '/../static';
   var relpath = '/img/users/' + dirname;
-  debugger;
   fs.mkdirSync(abspath + relpath);
   var extension = path.extname(oldpath);
   relpath += '/photo' + extension;
-  debugger;
   fs.renameSync(oldpath, abspath + relpath);
 
   this.userPhoto = relpath;

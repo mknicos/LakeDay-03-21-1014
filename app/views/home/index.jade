@@ -3,10 +3,10 @@ extends ../shared/template
 block content
   .jumbotron(style='background-image:url("/img/dev/openLake.jpg")')
     h1.homeTitle= title
-    p.homeP It's not always a lake day, but if you always wish it was, you are in the right place
-    blockquote(class="pull-right")
-      p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
-        small Someone famous in
-         cite(title="Source Title") Source Title
+    #blockLeft
+      blockquote.pull-left: div.homeLeft: p It's not always a lake day, but if you always wish it was, you are in the right place
+    blockquote.pull-right: div.homeRight: p On the Lake? Jump in and use the app on the lake!
+      button.btn.btn-success.btn-block(type='buton') On The Lake!
+
 
 

@@ -4,6 +4,8 @@
 process.env.DBNAME = 'mochaTest-lakeDay';
 var expect = require('chai').expect;
 var Mongo = require('mongodb');
+var fs = require('fs');
+var exec = require('child_process').exec;
 
 //--global varables--//
 var User, Boat, user2;
@@ -129,6 +131,32 @@ describe('User', function(){
       });
     });
   });
+  
+  describe('.addPhoto', function(){
+    beforeEach(function(done){
+      var testdir = __dirname + '/../../app/static/img/users/test*';
+      var cmd = 'rm -rf ' + testdir;
 
+      exec(cmd, function(){
+        var origfile = __dirname + '/../fixtures/chow.jpg';
+        var copyfile = __dirname + '/../fixtures/chow-copy.jpg';
+        fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile));
+        done();
+      });
+    });
 
+    it('should add a Photo to a user', function(done){
+      var userObj = {};
+      userObj.userName = 'Matt Knicos';
+      userObj.email = 'testmatt@matt.com';
+      userObj.password = '1234';
+      var u1 = new User(userObj);
+
+      var oldname = __dirname + '/../fixtures/chow-copy.jpg';
+      console.log(oldname);
+      u1.addPhoto(oldname);
+      expect(u1.userPhoto).to.equal('/img/users/testmattmattcom/photo.jpg');
+      done();
+    });
+  });
 });

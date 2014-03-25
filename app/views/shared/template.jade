@@ -43,12 +43,13 @@ html(class='no-js', lang='en')
             span.icon-bar
         .collapse.navbar-collapse#bs-example-navbar-collapse-1
           ul.nav.navbar-nav
-            li.active: a(href='/') Home
-            li: a(href='#') Link 2
+            li: a(href='/') Home
+            if userId
+              li: a(href='/users/'+ userId) Profile
             li.dropdown
-              a.dropdow-toggle(href='#', data-toggle='dropdown') Dropdown <b class="caret"></b>
+              a.dropdow-toggle(href='#', data-toggle='dropdown') Navigate <b class="caret"></b>
               ul.dropdown-menu
-                li: a(href='#') Action
+                li: a(href='/fleets/index') View Fleets
                 li: a(href='#') Action2
                 li: a(href='#') Action3
                 li.divider

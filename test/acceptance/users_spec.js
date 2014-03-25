@@ -9,7 +9,7 @@ var expect = require('chai').expect;
 var fs = require('fs');
 var exec = require('child_process').exec;
 var User, matt;
-//var cookie;
+var cookie;
 
 describe('users', function(){
 
@@ -117,13 +117,13 @@ describe('users', function(){
         .expect(302, done);
     });
   });
-/*
+
   describe('AUTHORIZED', function(){
     beforeEach(function(done){
       request(app)
       .post('/login')
-      .field('email', 'testsue@aol.com')
-      .field('password', 'abcd')
+      .field('email', 'testmatt@aol.com')
+      .field('password', '1234')
       .end(function(err, res){
         cookie = res.headers['set-cookie'];
         done();
@@ -131,9 +131,9 @@ describe('users', function(){
     });
 
     describe('GET /users:id', function(){
-      it('should login a user', function(done){
+      it('should show users show page', function(done){
         request(app)
-        .get('/users/1234')
+        .get('/users/'+ matt._id.toString())
         .set('cookie', cookie)
         .end(function(err, res){
           expect(res.status).to.equal(200);
@@ -142,7 +142,5 @@ describe('users', function(){
       });
     });
   });
-  /////END DESCRIBE
-*/
 });
 

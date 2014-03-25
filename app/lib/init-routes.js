@@ -22,9 +22,10 @@ function load(app, fn){
   app.get('/failLogin', d, users.failLogin);
   app.get('/successRegister', d, users.successRegister);
   app.get('/failRegister', d, users.failRegister);
-  app.get('/logout', d, users.logout);
 
 //-----users------//
+  app.get('/logout', d, users.logout);
+  app.get('/users/:id', d, users.show);
   app.post('/register', d, users.create);
   app.post('/login', d, users.authenticate);
 

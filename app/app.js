@@ -9,6 +9,7 @@ var session    = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var initMongo  = require('./lib/init-mongo');
 var initRoutes = require('./lib/init-routes');
+var bounceUser = require('./lib/bounce-user');
 
 var app = express();
 app.set('views', __dirname + '/views');
@@ -29,6 +30,7 @@ app.use(express.session({
   secret: 'change-this-to-a-super-secret-message',
   cookie: { maxAge: 24 * 60 * 60 * 1000 }
 }));
+app.use(bounceUser);
 app.use(app.router);
 /* --- pipeline ends   */
 

@@ -3,9 +3,8 @@ extends ../shared/template
 block content
   .jumbotron(style='background-image:url("/img/dev/openLake.jpg")')
     h1.homeTitle= title
-    #blockLeft
-      blockquote.pull-left: div.homeLeft: p It's not always a lake day, but if you always wish it was, you are in the right place
-    blockquote.pull-right: div.homeRight: p On the Lake? Jump in and use the app on the lake!
+    blockquote#blockLeft.pull-left: div.homeLeft: p It's not always a lake day, but if you always wish it was, you are in the right place
+    blockquote#blockRight.pull-right: div.homeRight: p On the Lake? Jump in and use the app on the lake!
       button.btn.btn-success.btn-block(type='buton') On The Lake!
 
 

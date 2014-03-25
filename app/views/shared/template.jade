@@ -10,6 +10,25 @@ html(class='no-js', lang='en')
     link(rel='stylesheet', href='/less/app.css')
     script(src='/js/vendor/modernizr.js')
   body
+    .modal.fade.register-modal(tabindex='-1', role='dialog', aria-labelledby='mySmallModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden="true") &times;
+            h4.modal-title Register
+          .modal-body
+            form(action='/register', method='post')
+              .form-group
+                label Name
+                input.form-control(type='text', placeholer='John Smith', name='name')
+              .form-group
+                label Email Address
+                input.form-control(type='email', placeholer='email@email.com', name='email')
+              .form-group
+                label Password
+                input.form-control(type='password', placeholer='********', name='password')
+              a(href='#').btn.btn-default(type="button", data-dismiss="modal") Close
+              button.btn.btn-danger(type="button", data-dismiss="modal") Register
     nav(class='navbar navbar-default', role='navigation')
       .container-fluid
         .navbar-header
@@ -20,7 +39,7 @@ html(class='no-js', lang='en')
             span.icon-bar
         .collapse.navbar-collapse#bs-example-navbar-collapse-1
           ul.nav.navbar-nav
-            li.active: a(href='#') Link
+            li.active: a(href='/') Home
             li: a(href='#') Link 2
             li.dropdown
               a.dropdow-toggle(href='#', data-toggle='dropdown') Dropdown <b class="caret"></b>
@@ -37,15 +56,21 @@ html(class='no-js', lang='en')
             button.btn.btn-primary.dropdown-toggle(data-toggle='dropdown') User
             ul.dropdown-menu
               li
-                form
-                  input.form-control(type='text', placeholder="Email")
-                  input.form-control(type='text', placeholder="Password")
-                  button(type='submit', class='btn btn-info') Login
-              li: button.btn.btn-link(type='button') Not Registered?
+                form#loginForm(action='/login', method='post')
+                  #loginFormPad
+                    input.form-control(type='text', placeholder="Email")
+                    input.form-control(type='password', placeholder="Password")
+                    button(type='submit', class='btn btn-info') Login
+              li: button.btn.btn-warning.btn-link(data-toggle='modal', data-target='.register-modal') Not Registered?
     block content
 
     script(src='/js/vendor/jquery.js')
     script(src='/js/vendor/bootstrap.min.js', type='text/javascript')
+    script(language="javascript").
+      $('.dropdown-toggle').dropdown();
+      $('.dropdown-menu').find('form').click(function (e) {
+        e.stopPropagation();
+      });
     script(src='/js/vendor/lodash.js')
     script(src='/js/vendor/moment.js')
     script(src='/js/source/main.js')

@@ -2,6 +2,22 @@ extends ../shared/template
 
 block content
   .jumbotron(style='background-image:url("/img/dev/openLake.jpg")')
+    if registerFail
+      .alert.alert-dismissable.alert-danger
+        button.close(type='button', data-dismiss='alert') x
+        h4 OOPS! That Email is Already Registered
+    if logInFail
+      .alert.alert-dismissable.alert-danger
+        button.close(type='button', data-dismiss='alert') x
+        h4 OOPS! That Email and Password did not match
+    if logInSuccess
+      .alert.alert-dismissable.alert-success
+        button.close(type='button', data-dismiss='alert') x
+        h4 You have sucessfully logged in
+    if registerSuccess
+      .alert.alert-dismissable.alert-success
+        button.close(type='button', data-dismiss='alert') x
+        h4 You Are Registered
     h1.homeTitle= title
     blockquote#blockLeft.pull-left: div.homeLeft: p It's not always a lake day, but if you always wish it was, you are in the right place
     blockquote#blockRight.pull-right: div.homeRight: p On the Lake? Jump in and use the app on the lake!

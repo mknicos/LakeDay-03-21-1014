@@ -155,9 +155,13 @@ describe('User', function(){
 
       var oldname = __dirname + '/../fixtures/chow-copy.jpg';
       console.log(oldname);
-      u1.addPhoto(oldname);
-      expect(u1.userPhoto).to.equal('/img/users/testmattmattcom/photo.jpg');
-      done();
+      u1.register(function(){
+        u1.addPhoto(oldname, function(count){
+          expect(u1.userPhoto).to.equal('/img/users/testmattmattcom/photo.jpg');
+          expect(count).to.equal(1);
+          done();
+        });
+      });
     });
   });
 

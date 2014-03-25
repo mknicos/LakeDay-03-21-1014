@@ -14,7 +14,6 @@ function User(user){
   this.email = user.email;
   this.lakeDay = user.lakeDay || false;
   this.boatsOwned = [];
-  this.userPhoto = user.userPhoto;
   this.fleets = [];
 }
 
@@ -51,7 +50,7 @@ function insert(user, fn){
   });
 }
 
-User.prototype.addPhoto = function(oldpath){
+User.prototype.addPhoto = function(oldpath, fn){
   var dirname = this.email.replace(/\W/g,'').toLowerCase();
   var abspath = __dirname + '/../static';
   var relpath = '/img/users/' + dirname;
@@ -61,6 +60,13 @@ User.prototype.addPhoto = function(oldpath){
   fs.renameSync(oldpath, abspath + relpath);
 
   this.userPhoto = relpath;
+  console.log('this._id');
+  console.log(this._id);
+  users.update({_id:this._id}, {$set: {userPhoto:this.userPhoto}}, function(err, count){
+    console.log('count');
+    console.log(count);
+    fn(count);
+  });
 };
 
 User.findById = function(id, fn){

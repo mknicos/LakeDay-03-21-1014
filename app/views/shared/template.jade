@@ -17,18 +17,22 @@ html(class='no-js', lang='en')
             button.close(type='button', data-dismiss='modal', aria-hidden="true") &times;
             h4.modal-title Register
           .modal-body
-            form(action='/register', method='post')
+            form(action='/register', method='post', enctype='multipart/form-data')
               .form-group
                 label Name
-                input.form-control(type='text', placeholer='John Smith', name='name')
+                input.form-control(type='text', placeholer='John Smith', name='userName', required)
               .form-group
                 label Email Address
-                input.form-control(type='email', placeholer='email@email.com', name='email')
+                input.form-control(type='email', placeholer='email@email.com', name='email', required)
               .form-group
                 label Password
-                input.form-control(type='password', placeholer='********', name='password')
-              a(href='#').btn.btn-default(type="button", data-dismiss="modal") Close
-              button.btn.btn-danger(type="button", data-dismiss="modal") Register
+                input.form-control(type='password', placeholer='********', name='password', required)
+              .form-group
+                label Picture
+                input.form-control(type='file', name='userPhoto', required)
+              .form-group
+                a(href='#').btn.btn-default(type="button", data-dismiss="modal") Close
+                button.btn.btn-danger(type="submit") Register
     nav(class='navbar navbar-default', role='navigation')
       .container-fluid
         .navbar-header
@@ -51,15 +55,14 @@ html(class='no-js', lang='en')
                 li: a(href='#') Action4
                 li.divider
                 li: a(href='#') Action4
-          form.navbar-form.navbar-left
           .nav.navbar-nav.navbar-right
             button.btn.btn-primary.dropdown-toggle(data-toggle='dropdown') User
             ul.dropdown-menu
               li
                 form#loginForm(action='/login', method='post')
                   #loginFormPad
-                    input.form-control(type='text', placeholder="Email")
-                    input.form-control(type='password', placeholder="Password")
+                    input.form-control(type='text', placeholder="Email", name='email')
+                    input.form-control(type='password', placeholder="Password", name='password')
                     button(type='submit', class='btn btn-info') Login
               li: button.btn.btn-warning.btn-link(data-toggle='modal', data-target='.register-modal') Not Registered?
     block content

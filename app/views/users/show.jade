@@ -1,27 +1,47 @@
 extends ../shared/template
 
 block content
-  input.userId(type='hidden', value= user._id.toString())
-  #userPic(style='background-image:url('+user.userPhoto+')')
-  h3= user.userName
-  h5: a(href='mailto:owner.email')= user.email
-//
-      #infoWrapOwner
-        each listing in listings
-          .row.panel.space
-            .small-3.columns
-              div(style='background-image: url('+listing.cover+')').item-img-large
-            .small-9.columns
-              a(href='/listings/' + listing._id): h3.linkToListing= listing.name
-              h4 Address: #{listing.address}
-              h4 Day Rate: $#{listing.amount}
-              p= listing.description
-              if listings.reservations
-                h1 Reservations
-                each reservation in listing.reservations
-                  .panel
-                    h3 Artist Name:  
-                      span= reservation.artistName
-                    h3 Date: 
-                      span= moment(reservation.reservedDate).format('MMMM Do, YYYY')
+  .container
+    .row
+      .col-sm-4
+        #userPicColumn
+          input.userId(type='hidden', value= user._id.toString())
+          #userPic(style='background-image:url('+user.userPhoto+')')
+          #userShowName
+            h3= user.userName
+            h5: a(href='mailto:owner.email')= user.email
+          .panel.panel-info
+            .panel-heading
+              h3.panel-title Stats
+            .panel-body
+              ul.list-group
+                li.list-group-item
+                  <span class="badge">2</span> Boats
+                li.list-group-item
+                  <span class="badge">1</span> Joined Fleets
+      .col-sm-8
+        #userBoatHeading
+          h2 Boats
+        #userBoats
+          if boats.length !== 0
+            for each boat in boats
+              .panel.panel-warning
+                .panel-heading
+                  h3.panel-title #{boat.boatName}
+                .panel-body
+                  ul.list-group
+                    li.list-group-item= boat.year
+                    li.list-group-item= boat.make
+                    li.list-group-item= boat.boatType
+        #userFleets
+          if fleets.length !== 0
+            for each fleet in fleets
+              .panel.panel-warning
+                .panel-heading
+                  h3.panel-title= fleet.fleetName
+                .panel-body
+                  ul.list-group
+                    li.list-group-item Cpt #{fleet.captain}
+                    li.list-group-item= fleet.users.length
 
+                

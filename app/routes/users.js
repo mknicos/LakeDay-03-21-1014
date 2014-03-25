@@ -77,6 +77,9 @@ exports.show = function(req, res){
     Boat.findByOwnerId(req.session.userId, function(boats){
       User.findFleets(req.session.userId, function(fleets){
         console.log('in exports.show, user, boats, fleets');
+        console.log(user);
+        console.log(boats);
+        console.log(fleets);
         res.render('users/show', {user:user, boats:boats, fleets: fleets});
       });
     });

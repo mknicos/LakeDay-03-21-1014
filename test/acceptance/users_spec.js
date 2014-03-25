@@ -109,6 +109,14 @@ describe('users', function(){
       });
     });
   });
+
+  describe('GET /logout', function(){
+    it('should log a user out successfully', function(done){
+      request(app)
+      .get('/logout')
+        .expect(302, done);
+    });
+  });
 /*
   describe('AUTHORIZED', function(){
     beforeEach(function(done){

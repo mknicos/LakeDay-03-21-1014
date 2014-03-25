@@ -18,10 +18,11 @@ function load(app, fn){
 
 //-----home--------//
   app.get('/', d, home.index);
-  app.get('/failLogin', d, users.failLogin);
   app.get('/successLogin', d, users.successLogin);
+  app.get('/failLogin', d, users.failLogin);
+  app.get('/successRegister', d, users.successRegister);
   app.get('/failRegister', d, users.failRegister);
-  app.get('/successRegister', d, users.failRegister);
+  app.get('/logout', d, users.logout);
 
 //-----users------//
   app.post('/register', d, users.create);

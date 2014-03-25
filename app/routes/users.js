@@ -10,7 +10,7 @@ exports.create = function(req, res){
   user.register(function(){
     if(user._id){
       user.addPhoto(req.files.userPhoto.path, function(count){
-        res.redirect('/');
+        res.redirect('/successRegister');
       });
     }else{
       res.redirect('/failRegister');
@@ -22,14 +22,18 @@ exports.failRegister = function(req, res){
   res.render('home/index', {title: 'It\'s A Lake Day', registerFail: true});
 };
 
-exports.failRegister = function(req, res){
-  res.render('home/index', {title: 'It\'s A Lake Day', registerSuccess: true});
+exports.successRegister = function(req, res){
+  var login;
+  if(req.session.userId){
+    login = true;
+  }else{
+    login=false;
+  }
+  res.render('home/index', {title: 'It\'s A Lake Day', registerSuccess: true, login:login});
 };
 
 exports.authenticate = function(req, res){
   User.findByEmailAndPassword(req.body.email, req.body.password, function(user){
-    console.log('user');
-    console.log(user);
     if(user){
       req.session.regenerate(function(){
         req.session.userId = user._id.toString();
@@ -51,5 +55,17 @@ exports.failLogin = function(req, res){
 };
 
 exports.successLogin = function(req, res){
-  res.render('home/index', {title: 'It\'s A Lake Day', logInSuccess:true});
+  var login;
+  if(req.session.userId){
+    login = true;
+  }else{
+    login = false;
+  }
+  res.render('home/index', {title: 'It\'s A Lake Day', logInSuccess:true, login:login});
+};
+
+exports.logout = function(req, res){
+  req.session.destroy(function(){
+    res.redirect('/');
+  });
 };

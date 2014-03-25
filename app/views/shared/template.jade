@@ -31,7 +31,7 @@ html(class='no-js', lang='en')
                 label Picture
                 input.form-control(type='file', name='userPhoto', required)
               .form-group
-                a(href='#').btn.btn-default(type="button", data-dismiss="modal") Close
+                a(href='#', type="button", data-dismiss="modal").btn.btn-default Close
                 button.btn.btn-danger(type="submit") Register
     nav(class='navbar navbar-default', role='navigation')
       .container-fluid
@@ -56,15 +56,18 @@ html(class='no-js', lang='en')
                 li.divider
                 li: a(href='#') Action4
           .nav.navbar-nav.navbar-right
-            button.btn.btn-primary.dropdown-toggle(data-toggle='dropdown') User
-            ul.dropdown-menu
-              li
-                form#loginForm(action='/login', method='post')
-                  #loginFormPad
-                    input.form-control(type='text', placeholder="Email", name='email')
-                    input.form-control(type='password', placeholder="Password", name='password')
-                    button(type='submit', class='btn btn-info') Login
-              li: button.btn.btn-warning.btn-link(data-toggle='modal', data-target='.register-modal') Not Registered?
+            if login == false
+              button.btn.btn-primary.dropdown-toggle(data-toggle='dropdown') User
+              ul.dropdown-menu
+                li
+                  form#loginForm(action='/login', method='post')
+                    #loginFormPad
+                      input.form-control(type='text', placeholder="Email", name='email')
+                      input.form-control(type='password', placeholder="Password", name='password')
+                      button(type='submit', class='btn btn-info') Login
+                li: button.btn.btn-warning.btn-link(data-toggle='modal', data-target='.register-modal') Not Registered?
+            if login == true
+              a(href='/logout').btn.btn-danger Log Out
     block content
 
     script(src='/js/vendor/jquery.js')

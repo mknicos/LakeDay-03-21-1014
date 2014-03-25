@@ -80,7 +80,7 @@ exports.show = function(req, res){
         console.log(user);
         console.log(boats);
         console.log(fleets);
-        res.render('users/show', {user:user, boats:boats, fleets: fleets});
+        res.render('users/show', {user:user, boats:boats, fleets: fleets, login:true});
       });
     });
   });

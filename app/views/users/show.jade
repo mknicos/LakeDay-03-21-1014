@@ -16,14 +16,17 @@ block content
             .panel-body
               ul.list-group
                 li.list-group-item
-                  <span class="badge">2</span> Boats
+                  <span class="badge">#{boats.length}</span> Boats
                 li.list-group-item
-                  <span class="badge">1</span> Joined Fleets
+                  <span class="badge">#{fleets.length}</span> Joined Fleets
       .col-sm-8
-        #userBoatHeading
-          h2 Boats
-        #userBoats
-          if boats.length !== 0
+        if boats.length == 0
+          .userShowHeading
+            h2 This User Has No Boats
+        if boats.length !== 0
+          .userShowHeading
+            h2 Boats
+          #userBoats
             for each boat in boats
               .panel.panel-warning
                 .panel-heading
@@ -33,15 +36,19 @@ block content
                     li.list-group-item= boat.year
                     li.list-group-item= boat.make
                     li.list-group-item= boat.boatType
-        #userFleets
-          if fleets.length !== 0
-            for each fleet in fleets
-              .panel.panel-warning
-                .panel-heading
-                  h3.panel-title= fleet.fleetName
-                .panel-body
-                  ul.list-group
-                    li.list-group-item Cpt #{fleet.captain}
-                    li.list-group-item= fleet.users.length
+        if fleets.length == 0
+          .userShowHeading
+            h2 This User Has Not Joined Any Fleets
+        if fleets.length !== 0
+          .userShowHeading
+            h2 Fleets Joined
+          for each fleet in fleets
+            .panel.panel-warning
+              .panel-heading
+                h3.panel-title= fleet.fleetName
+              .panel-body
+                ul.list-group
+                  li.list-group-item Cpt #{fleet.captain}
+                  li.list-group-item= fleet.users.length
 
                 

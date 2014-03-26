@@ -22,8 +22,10 @@ exports.create = function(req, res){
   var captainId = new Mongo.ObjectID(req.body.captain);
   req.body.captain = captainId;
   var fleet = new Fleet(req.body);
-  fleet.addFlag(req.files.path);
   fleet.insert(function(record){
+    if(record !== 'duplicate'){
+      fleet.addFlag(req.files.path);
+    }
     res.redirect('/users/'+req.session.userId);
   });
 };

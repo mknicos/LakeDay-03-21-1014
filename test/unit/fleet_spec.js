@@ -200,9 +200,18 @@ describe('Fleet', function(){
       fleetObj.fleetName = 'Test Super Sailers';
       var f1 = new Fleet(fleetObj);
       var oldname = __dirname + '/../fixtures/myFlag-copy.jpg';
-      f1.addFlag(oldname);
-      expect(f1.fleetFlag).to.equal('/img/fleets/testsupersailers/flag.jpg');
-      done();
+      f1.insert(function(){
+        console.log('f1');
+        console.log(f1);
+        f1.addFlag(oldname, function(count){
+          console.log('f1');
+          console.log(f1);
+          console.log(count);
+          expect(f1.fleetFlag).to.equal('/img/fleets/testsupersailers/flag.jpg');
+          expect(count).to.equal(1);
+          done();
+        });
+      });
     });
   });
 });

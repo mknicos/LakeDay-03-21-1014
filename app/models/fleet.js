@@ -89,7 +89,7 @@ function checkForMember(fleetId, userId, fn){
   });
 }
 
-Fleet.prototype.addFlag = function(oldpath){
+Fleet.prototype.addFlag = function(oldpath, fn){
   var dirname = this.fleetName.replace(/\W/g,'').toLowerCase();
   var abspath = __dirname + '/../static';
   var relpath = '/img/fleets/' + dirname;
@@ -97,8 +97,12 @@ Fleet.prototype.addFlag = function(oldpath){
   var extension = path.extname(oldpath);
   relpath += '/flag' + extension;
   fs.renameSync(oldpath, abspath + relpath);
-
   this.fleetFlag = relpath;
+  fleets.update({_id:this._id}, {$set: {fleetFlag:this.fleetFlag}}, function(err, count){
+    console.log('count after update');
+    console.log(count);
+    fn(count);
+  });
 };
 
 Fleet.findAll = function(fn){

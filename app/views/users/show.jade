@@ -8,7 +8,8 @@ block content
           button.close(type='button', data-dismiss='modal', aria-hidden="true") &times;
           h4.modal-title Add A Boat
         .modal-body
-          form(action='/boat/new', method='post', enctype='multipart/form-data')
+          form(action='/boats', method='post', enctype='multipart/form-data')
+            input(type='hidden', name='ownerId', value='#{user._id.toString()}')
             .form-group
               label Boat Name
               input.form-control(type='text', placeholer='Titanic', name='boatName', required)
@@ -25,14 +26,21 @@ block content
                 option(value='paddle') Paddle
                 option(value='motor') Motor
             .form-group
+              label Description
+              textarea.form-control(type='text', name='description', required)
+            .form-group
               label Picture
               input.form-control(type='file', name='boatPhoto', required)
             .form-group
               a(href='#', type="button", data-dismiss="modal").btn.btn-default Close
               button.btn.btn-danger(type="submit") Add Boat
   .container
+    if newBoatFail
+      .alert.alert-dismissable.alert-danger
+        button.close(type='button', data-dismiss='alert') x
+        h4 OOPS! That Boat Name already exists
     .row
-      .col-sm-4
+      .col-sm-4.col-sm-ofset-1
         #userPicColumn
           input.userId(type='hidden', value= user._id.toString())
           #userPic(style='background-image:url('+user.userPhoto+')')
@@ -51,7 +59,7 @@ block content
           .buttonsUserShow
             button#boatCreateButton.btn.btn-primary.pull-left(data-toggle='modal', data-target='.boatCreate-modal') Add Boat
             a#fleetLinkUserShow.btn.btn-primary.pull-right(href='fleets/index') Join Fleet
-      .col-sm-8
+      .col-sm-6.col-sm-offset-1
         if boats.length == 0
           .userShowHeading
             h2 This User Has No Boats
@@ -59,7 +67,7 @@ block content
           .userShowHeading
             h2 Boats
           #userBoats
-            for each boat in boats
+            each boat in boats
               .panel.panel-warning
                 .panel-heading
                   h3.panel-title #{boat.boatName}
@@ -74,7 +82,7 @@ block content
         if fleets.length !== 0
           .userShowHeading
             h2 Fleets Joined
-          for each fleet in fleets
+          each fleet in fleets
             .panel.panel-warning
               .panel-heading
                 h3.panel-title= fleet.fleetName

@@ -5,7 +5,7 @@ var _ = require('lodash');
 
 module.exports = function(req, res, next){
   var path = url.parse(req.url).pathname;
-  var urls = ['/', '/registerFail', '/register', '/login', '/loginFail'];
+  var urls = ['/', '/failRegister', '/register', '/login', '/failLogin'];
 
   if(_.contains(urls, path)){
     next();

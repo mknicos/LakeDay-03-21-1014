@@ -15,6 +15,7 @@ module.exports = function(req, res, next){
 function load(app, fn){
   var home = require('../routes/home');
   var users = require('../routes/users');
+  var boats = require('../routes/boats');
 
 //-----home--------//
   app.get('/', d, home.index);
@@ -25,11 +26,13 @@ function load(app, fn){
 
 //-----users------//
   app.get('/logout', d, users.logout);
-  app.get('/users/:id', d, users.show);
+  app.get('/users/show', d, users.show);
+  app.get('/boatCreateFail', d, users.showBoatFail);
   app.post('/register', d, users.create);
   app.post('/login', d, users.authenticate);
 
 //-----boats------//
+  app.post('/boats', d, boats.create);
 
 
 //-----fleets------//

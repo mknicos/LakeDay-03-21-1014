@@ -76,18 +76,25 @@ exports.show = function(req, res){
   User.findById(req.session.userId, function(user){
     Boat.findByOwnerId(req.session.userId, function(boats){
       User.findFleets(req.session.userId, function(fleets){
-        console.log('in exports.show, user, boats, fleets');
-        console.log(user);
+        console.log('boats');
         console.log(boats);
+        console.log('fleets');
         console.log(fleets);
-        res.render('users/show', {user:user, boats:boats, fleets: fleets, login:true});
+        res.render('users/show', {user:user, boats:boats, fleets: fleets, login:true, newBoatFail:false});
       });
     });
   });
 };
 
-
-
+exports.showBoatFail = function(req, res){
+  User.findById(req.session.userId, function(user){
+    Boat.findByOwnerId(req.session.userId, function(boats){
+      User.findFleets(req.session.userId, function(fleets){
+        res.render('users/show', {user:user, boats:boats, fleets: fleets, login:true, newBoatFail:true});
+      });
+    });
+  });
+};
 
 
 

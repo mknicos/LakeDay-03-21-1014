@@ -1,6 +1,35 @@
 extends ../shared/template
 
 block content
+  .modal.fade.boatCreate-modal(tabindex='-1', role='dialog', aria-labelledby='boatCreateModal', aria-hidden='true')
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-hidden="true") &times;
+          h4.modal-title Add A Boat
+        .modal-body
+          form(action='/boat/new', method='post', enctype='multipart/form-data')
+            .form-group
+              label Boat Name
+              input.form-control(type='text', placeholer='Titanic', name='boatName', required)
+            .form-group
+              label Year
+              input.form-control(type='text', placeholer='1997', name='year', required)
+            .form-group
+              label Make
+              input.form-control(type='text', placeholer='Hobie', name='make', required)
+            .form-group
+              label Type
+              select.form-control(name="boatType")
+                option(value='sail') Sail
+                option(value='paddle') Paddle
+                option(value='motor') Motor
+            .form-group
+              label Picture
+              input.form-control(type='file', name='boatPhoto', required)
+            .form-group
+              a(href='#', type="button", data-dismiss="modal").btn.btn-default Close
+              button.btn.btn-danger(type="submit") Add Boat
   .container
     .row
       .col-sm-4
@@ -19,6 +48,9 @@ block content
                   <span class="badge">#{boats.length}</span> Boats
                 li.list-group-item
                   <span class="badge">#{fleets.length}</span> Joined Fleets
+          .buttonsUserShow
+            button#boatCreateButton.btn.btn-primary.pull-left(data-toggle='modal', data-target='.boatCreate-modal') Add Boat
+            a#fleetLinkUserShow.btn.btn-primary.pull-right(href='fleets/index') Join Fleet
       .col-sm-8
         if boats.length == 0
           .userShowHeading

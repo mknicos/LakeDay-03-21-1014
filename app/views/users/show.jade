@@ -59,7 +59,7 @@ block content
           .buttonsUserShow
             button#boatCreateButton.btn.btn-primary.pull-left(data-toggle='modal', data-target='.boatCreate-modal') Add Boat
             a#fleetLinkUserShow.btn.btn-primary.pull-right(href='/fleets') Join Fleet
-      .col-sm-6.col-sm-offset-1
+      .col-sm-3.col-sm-offset-1
         if boats.length == 0
           .userShowHeading
             h2 This User Has No Boats
@@ -68,17 +68,20 @@ block content
             h2 Boats
           #userBoats
             each boat in boats
-              .panel.panel-warning
+              .oneBoatUserShow.panel.panel-warning
                 .panel-heading
                   h3.panel-title #{boat.boatName}
                 .panel-body
-                  ul.list-group
+                  ul.listGroupUserShow.list-group
+                    img.boatPhotoUserShow.img-circle(src='#{boat.boatPhoto}')
                     li.list-group-item= boat.year
                     li.list-group-item= boat.make
-                    li.list-group-item= boat.boatType
+                    //li.list-group-item= boat.boatType
+      .col-sm-3
         if fleets.length == 0
           .userShowHeading
-            h2 This User Has Not Joined Any Fleets
+            h2 Fleets
+            a#fleetLinkUserShow.btn.btn-success(href='/fleets') Join Fleet
         if fleets.length !== 0
           .userShowHeading
             h2 Fleets Joined

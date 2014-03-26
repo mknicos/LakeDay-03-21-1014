@@ -170,7 +170,6 @@ describe('Fleet', function(){
       var fleetObj = {fleetName:'superpeople'};
       var f1 = new Fleet(fleetObj);
       f1.insert(function(){
-        console.log(testUser3._id);
         Fleet.addUser(f1._id.toString(), testUser1._id.toString(), function(){
           Fleet.addUser(f1._id.toString(), testUser3._id.toString(), function(){
             Fleet.findUsers(f1._id.toString(), function(records){
@@ -201,12 +200,7 @@ describe('Fleet', function(){
       var f1 = new Fleet(fleetObj);
       var oldname = __dirname + '/../fixtures/myFlag-copy.jpg';
       f1.insert(function(){
-        console.log('f1');
-        console.log(f1);
         f1.addFlag(oldname, function(count){
-          console.log('f1');
-          console.log(f1);
-          console.log(count);
           expect(f1.fleetFlag).to.equal('/img/fleets/testsupersailers/flag.jpg');
           expect(count).to.equal(1);
           done();

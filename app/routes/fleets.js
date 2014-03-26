@@ -14,6 +14,11 @@ exports.index = function(req, res){
     }else{
       login=false;
     }
+
+    console.log('req.session.userId');
+    console.log(req.session.userId);
+    console.log('records');
+    console.log(records);
     res.render('fleets/index', {fleets:records, login:login, userId:req.session.userId});
   });
 };
@@ -22,10 +27,15 @@ exports.create = function(req, res){
   var captainId = new Mongo.ObjectID(req.body.captain);
   req.body.captain = captainId;
   var fleet = new Fleet(req.body);
+  console.log('req.body');
+  console.log(req.body);
   fleet.insert(function(record){
     if(record !== 'duplicate'){
-      fleet.addFlag(req.files.fleetFlag.path);
+      fleet.addFlag(req.files.fleetFlag.path, function(count){
+        res.redirect('/users/'+req.session.userId);
+      });
+    }else{
+      res.redirect('/users/'+req.session.userId);
     }
-    res.redirect('/users/'+req.session.userId);
   });
 };

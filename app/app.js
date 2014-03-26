@@ -28,7 +28,7 @@ app.use(express.cookieParser());
 app.use(express.session({
   store : new RedisStore({host: 'localhost', port: 6379}),
   secret: 'change-this-to-a-super-secret-message',
-  cookie: { maxAge: 24 * 60 * 60 * 1000 }
+  cookie: { maxAge: 1 * 60 * 60 * 1000 }
 }));
 app.use(bounceUser);
 app.use(app.router);

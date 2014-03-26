@@ -12,7 +12,7 @@ module.exports = Fleet;
 function Fleet(fleet){
   this.fleetName = fleet.fleetName;
   this.users = [];
-  this.captain = new Mongo.ObjectID(fleet._id);
+  this.captain = fleet.captain;
   this.description = fleet.description;
 }
 

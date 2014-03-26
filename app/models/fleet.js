@@ -29,7 +29,7 @@ Fleet.prototype.insert = function(fn){
         fn(record);
       });
     }else{ //if boat name already exists
-      console.log('duplicate boat name attempted to be added');
+      console.log('duplicate fleet name attempted to be added');
       fn('duplicate');
     }
   });

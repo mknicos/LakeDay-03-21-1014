@@ -11,7 +11,7 @@ exports.create = function(req, res){
     if(records === 'duplicate'){
       res.redirect('/boatCreateFail');
     }else{
-      res.redirect('users/show');
+      res.redirect('users/'+req.session.userId);
     }
   });
 };

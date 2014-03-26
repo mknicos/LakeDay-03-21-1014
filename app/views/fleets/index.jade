@@ -1,0 +1,32 @@
+extends ../shared/template
+
+block content
+  .modal.fade.fleetCreate-modal(tabindex='-1', role='dialog', aria-labelledby='boatCreateModal', aria-hidden='true')
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-hidden="true") &times;
+          h4.modal-title Start A Fleet
+        .modal-body
+          form(action='/fleets', method='post', enctype='multipart/form-data')
+            input(type='hidden', name='captain', value='#{userId}')
+            .form-group
+              label Fleet Name
+              input.form-control(type='text', placeholer='Super Sailors', name='fleetName', required)
+            .form-group
+              label Description
+              textarea.form-control(type='text', name='description', required)
+            .form-group
+              label Flag
+              input.form-control(type='file', name='flag', required)
+            .form-group
+              a(href='#', type="button", data-dismiss="modal").btn.btn-default Close
+              button.btn.btn-danger(type="submit") Create Fleet
+  h2 Current Fleets
+  button#fleetCreateButton.btn.btn-primary.pull-left(data-toggle='modal', data-target='.fleetCreate-modal') Create Fleet
+  each fleet in fleets
+    ul
+      li= fleet.fleetName
+      li: a(href='/users/'+fleet.captain.toString()) Captain's Profile
+      li= fleet.users.length
+      li= fleet.description

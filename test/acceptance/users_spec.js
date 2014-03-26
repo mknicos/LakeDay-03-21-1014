@@ -130,10 +130,10 @@ describe('users', function(){
       });
     });
 
-    describe('GET /users/show', function(){
+    describe('GET /users/:id', function(){
       it('should show users show page', function(done){
         request(app)
-        .get('/users/show')
+        .get('/users/'+ matt._id.toString())
         .set('cookie', cookie)
         .end(function(err, res){
           expect(res.status).to.equal(200);

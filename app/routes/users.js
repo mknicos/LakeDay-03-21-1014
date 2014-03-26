@@ -73,13 +73,11 @@ exports.successLogin = function(req, res){
 //need to be logged in to see//
 
 exports.show = function(req, res){
-  User.findById(req.session.userId, function(user){
+  console.log('req.params');
+  console.log(req.params);
+  User.findById(req.params.id, function(user){
     Boat.findByOwnerId(req.session.userId, function(boats){
       User.findFleets(req.session.userId, function(fleets){
-        console.log('boats');
-        console.log(boats);
-        console.log('fleets');
-        console.log(fleets);
         res.render('users/show', {user:user, boats:boats, fleets: fleets, login:true, newBoatFail:false});
       });
     });
@@ -87,7 +85,7 @@ exports.show = function(req, res){
 };
 
 exports.showBoatFail = function(req, res){
-  User.findById(req.session.userId, function(user){
+  User.findById(req.params.id, function(user){
     Boat.findByOwnerId(req.session.userId, function(boats){
       User.findFleets(req.session.userId, function(fleets){
         res.render('users/show', {user:user, boats:boats, fleets: fleets, login:true, newBoatFail:true});

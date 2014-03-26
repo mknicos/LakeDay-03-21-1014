@@ -16,6 +16,7 @@ function load(app, fn){
   var home = require('../routes/home');
   var users = require('../routes/users');
   var boats = require('../routes/boats');
+  var fleets = require('../routes/fleets');
 
 //-----home--------//
   app.get('/', d, home.index);
@@ -26,7 +27,7 @@ function load(app, fn){
 
 //-----users------//
   app.get('/logout', d, users.logout);
-  app.get('/users/show', d, users.show);
+  app.get('/users/:id', d, users.show);
   app.get('/boatCreateFail', d, users.showBoatFail);
   app.post('/register', d, users.create);
   app.post('/login', d, users.authenticate);
@@ -36,6 +37,8 @@ function load(app, fn){
 
 
 //-----fleets------//
+  app.get('/fleets', d, fleets.index);
+  //app.post('/fleets', d, fleets.create);
 
 
 

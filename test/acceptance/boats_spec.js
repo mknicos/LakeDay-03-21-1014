@@ -10,7 +10,7 @@ var User, Boat;
 var cookie;
 var matt;
 
-describe('items', function(){
+describe('boats', function(){
 
   before(function(done){
     request(app)

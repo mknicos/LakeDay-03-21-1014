@@ -39,3 +39,13 @@ exports.create = function(req, res){
     }
   });
 };
+
+exports.addUserToFleet = function(req, res){
+  //result is 1 if added, and 'already member' if already member
+  Fleet.addUser(req.params.fleetId, req.session.userId, function(result){
+    console.log('result of adding user to fleet');
+    console.log(result);
+    res.redirect('/users/'+req.session.userId);
+  });
+};
+

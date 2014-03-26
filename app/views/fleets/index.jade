@@ -36,7 +36,7 @@ block content
               .panelFleetIndex.panel.panel-success
                 .panel-heading
                   h2.panel-title= fleet.fleetName
-                  a(href='/fleet/join/'+fleet._id.toString()).fleetButton.btn.btn-info.btn-xs.pull-right Join
+                  a(href='/fleets/join/'+fleet._id.toString()).fleetButton.btn.btn-info.btn-xs.pull-right Join
                 .panel-body
                   ul.list-group
                     img.fleetFlagFleetIndex(src='#{fleet.fleetFlag}')

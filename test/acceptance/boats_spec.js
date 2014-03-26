@@ -55,7 +55,7 @@ describe('boats', function(){
           fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile));
           fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile2));
           global.nss.db.dropDatabase(function(err, result){
-            var b1 = new Boat({boatName:'orange'});
+            var b1 = new Boat({boatName:'test orange'});
             b1.insert(function(record){
               done();
             });
@@ -75,7 +75,7 @@ describe('boats', function(){
           .field('description', 'Really Fast, awesome boat')
           .field('ownerId', matt._id.toString())
           .field('type', 'sail')
-          .attach('photo', oldname)
+          .attach('boatPhoto', oldname)
           .expect(302, done);
         });
         it('should not create a new boat, because duplicate boat Name', function(done){
@@ -83,13 +83,13 @@ describe('boats', function(){
           request(app)
           .post('/boats')
           .set('cookie', cookie)
-          .field('boatName', 'orange')
+          .field('boatName', 'test orange')
           .field('year', '2000')
           .field('make', 'Sunfish')
           .field('description', 'Nice Boat')
           .field('ownerId', matt._id.toString())
           .field('type', 'sail')
-          .attach('photo', oldname)
+          .attach('boatPhoto', oldname)
           .expect(302, done);
         });
       });

@@ -11,7 +11,9 @@ exports.create = function(req, res){
     if(records === 'duplicate'){
       res.redirect('/boatCreateFail');
     }else{
-      res.redirect('users/'+req.session.userId);
+      boat.addPhoto(req.files.boatPhoto.path, function(count){
+        res.redirect('users/'+req.session.userId);
+      });
     }
   });
 };

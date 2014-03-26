@@ -24,7 +24,7 @@ exports.create = function(req, res){
   var fleet = new Fleet(req.body);
   fleet.insert(function(record){
     if(record !== 'duplicate'){
-      fleet.addFlag(req.files.path);
+      fleet.addFlag(req.files.fleetFlag.path);
     }
     res.redirect('/users/'+req.session.userId);
   });

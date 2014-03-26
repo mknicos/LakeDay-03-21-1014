@@ -218,9 +218,13 @@ describe('Boat', function(){
       var b1 = new Boat(boatObj);
 
       var oldname = __dirname + '/../fixtures/guitarBoat-copy.jpg';
-      b1.addPhoto(oldname);
-      expect(b1.boatPhoto).to.equal('/img/boats/testmermershewrote/photo.jpg');
-      done();
+      b1.insert(function(){
+        b1.addPhoto(oldname, function(count){
+          expect(b1.boatPhoto).to.equal('/img/boats/testmermershewrote/photo.jpg');
+          expect(count).to.equal(1);
+          done();
+        });
+      });
     });
   });
 });

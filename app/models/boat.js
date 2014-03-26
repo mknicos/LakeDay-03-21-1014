@@ -89,7 +89,7 @@ Boat.findByBoatMake = function(make, fn){
 };
 
 
-Boat.prototype.addPhoto = function(oldpath){
+Boat.prototype.addPhoto = function(oldpath, fn){
   var dirname = this.boatName.replace(/\W/g,'').toLowerCase();
   var abspath = __dirname + '/../static';
   var relpath = '/img/boats/' + dirname;
@@ -99,4 +99,8 @@ Boat.prototype.addPhoto = function(oldpath){
   fs.renameSync(oldpath, abspath + relpath);
 
   this.boatPhoto = relpath;
+
+  boats.update({_id:this._id}, {$set: {boatPhoto:this.boatPhoto}}, function(err, count){
+    fn(count);
+  });
 };

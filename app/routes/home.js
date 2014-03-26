@@ -2,7 +2,7 @@
 
 exports.index = function(req, res){
   var login;
-  if(req.user){
+  if(req.session.userId){
     login = true;
   }else{
     login = false;

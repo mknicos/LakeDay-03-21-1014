@@ -6,6 +6,9 @@
 
   function initialize(){
     //$(document).bootstrap();
+
+    $('.userShowBoatToolTip').tooltip();
+
   }
 
 })();

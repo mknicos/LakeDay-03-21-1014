@@ -3,7 +3,7 @@
 
 process.env.DBNAME = 'mochaTest-lakeDay';
 var expect = require('chai').expect;
-var Mongo = require('mongodb');
+//var Mongo = require('mongodb');
 var fs = require('fs');
 var exec = require('child_process').exec;
 
@@ -49,7 +49,6 @@ describe('Fleet', function(){
       var f1 = new Fleet(fleetObj);
       expect(f1).to.be.instanceof(Fleet);
       expect(f1.fleetName).to.equal('Super Sailers');
-      expect(f1.captain).to.be.instanceof(Mongo.ObjectID);
       done();
     });
   });
@@ -87,7 +86,6 @@ describe('Fleet', function(){
       f1.insert(function(){
         f1.updateCaptain(testUser2._id.toString(), function(count){
           expect(count).to.equal(1);
-          expect(f1.captain).to.be.instanceof(Mongo.ObjectID);
           done();
         });
       });

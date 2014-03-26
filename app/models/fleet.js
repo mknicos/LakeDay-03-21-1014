@@ -115,6 +115,10 @@ Fleet.findUsers = function(fleetId, fn){
   //input->fleetId string
   //output->User objects in array
   Fleet.findById(fleetId, function(record){
+    console.log('fleetId');
+    console.log(fleetId);
+    console.log('record');
+    console.log(record);
     users.find({_id: {$in: record.users}}).toArray(function(err, users){
       fn(users);
     });

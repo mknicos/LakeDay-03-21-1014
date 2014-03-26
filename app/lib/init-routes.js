@@ -40,6 +40,7 @@ function load(app, fn){
   app.get('/fleets', d, fleets.index);
   app.post('/fleets', d, fleets.create);
   app.get('/fleets/join/:fleetId', d, fleets.addUserToFleet);
+  app.get('/fleets/:fleetId', d, fleets.show);
 
 
 

@@ -1,7 +1,7 @@
 //fleets acceptance test
 'use strict';
 
-process.env.DBNAME = 'item-test';
+process.env.DBNAME = 'mocha-lake-test';
 var app = require('../../app/app');
 var request = require('supertest');
 var fs = require('fs');
@@ -9,7 +9,7 @@ var exec = require('child_process').exec;
 var expect = require('chai').expect;
 var User, Boat, Fleet;
 var cookie;
-var matt;
+var matt, f1;
 
 describe('boats', function(){
 
@@ -68,7 +68,7 @@ describe('boats', function(){
           fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile));
           fs.createReadStream(origfile).pipe(fs.createWriteStream(copyfile2));
           global.nss.db.dropDatabase(function(err, result){
-            var f1 = new Fleet({fleetName:'cool'});
+            f1 = new Fleet({fleetName:'cool'});
             f1.insert(function(record){
               done();
             });
@@ -101,6 +101,19 @@ describe('boats', function(){
           .end(function(err, res){
             expect(res.status).to.equal(302);
             done();
+          });
+        });
+      });
+      describe('GET /fleets/:id', function(){
+        it('should display the fleet show page', function(done){
+          var f2 = new Fleet({fleetName: 'Awesome'});
+          f2.insert(function(record){
+            console.log('f2');
+            console.log(f2);
+            request(app)
+            .get('/fleets/'+ f2._id.toString())
+            .set('cookie', cookie)
+            .expect(200, done);
           });
         });
       });

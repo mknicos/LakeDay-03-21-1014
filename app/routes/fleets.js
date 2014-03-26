@@ -49,3 +49,10 @@ exports.addUserToFleet = function(req, res){
   });
 };
 
+exports.show = function(req, res){
+  Fleet.findById(req.params.fleetId, function(fleet){
+    Fleet.findUsers(req.params.fleetId, function(users){
+      res.render('fleets/show', {fleet:fleet, users:users, login:true, userId:req.session.userId});
+    });
+  });
+};

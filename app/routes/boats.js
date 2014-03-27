@@ -1,7 +1,7 @@
 //boats route
 'use strict';
 
-//var User = require('../models/user');
+var User = require('../models/user');
 var Boat = require('../models/boat');
 //var request = require('request');
 
@@ -13,7 +13,9 @@ exports.create = function(req, res){
       res.redirect('/boatCreateFail');
     }else{
       boat.addPhoto(req.files.boatPhoto.path, function(count){
-        res.redirect('users/'+req.session.userId);
+        User.addBoat(req.session.userId, boat._id.toString(), function(count){
+          res.redirect('users/'+req.session.userId);
+        });
       });
     }
   });

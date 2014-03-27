@@ -2,4 +2,21 @@ extends ../shared/template
 
 block content
   .container
-    h2 FLEET SHOW
+    h2= boatCount
+    .row
+      .col-sm-4
+        #fleetPic(style='background-image:url('+fleet.fleetFlag+')')
+      .col-sm-4
+        #fleetShowTitle
+          h1= fleet.fleetName
+            h3: small Nashville, TN
+      .col-sm-4
+    .row
+      .col-sm-4
+        ul.list-group
+          li.list-group-item
+            <span class="badge">#{users.length}</span> Members
+      .col-sm-8
+        each user in users
+          h4= user.userName
+

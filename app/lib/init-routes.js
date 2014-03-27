@@ -42,8 +42,6 @@ function load(app, fn){
   app.get('/fleets/join/:fleetId', d, fleets.addUserToFleet);
   app.get('/fleets/:fleetId', d, fleets.show);
 
-
-
   console.log('Routes Loaded');
   fn();
 }

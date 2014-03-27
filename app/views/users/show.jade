@@ -42,7 +42,6 @@ block content
     .row
       .col-sm-4
         #userPicColumn
-          input.userId(type='hidden', value= user._id.toString())
           #userPic(style='background-image:url('+user.userPhoto+')')
           #userShowName
             h3= user.userName
@@ -89,7 +88,7 @@ block content
           each fleet in fleets
             .panel.panel-warning
               .panel-heading
-                h3.panel-title= fleet.fleetName
+                a(href='/fleets/'+fleet._id.toString()).panel-title= fleet.fleetName
               .panel-body
                 ul.list-group
                   img.imgUserShow(src='#{fleet.fleetFlag}')

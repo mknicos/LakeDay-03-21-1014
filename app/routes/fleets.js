@@ -44,14 +44,10 @@ exports.show = function(req, res){
   Fleet.findById(req.params.fleetId, function(fleet){
     Fleet.findUsers(req.params.fleetId, function(users){
       var boatCount = 0;
-      console.log('users');
-      console.log(users);
       for(var i = 0; i < users.length; i++){
         boatCount += users[i].boatsOwned.length;
       }
-      console.log('boatCount');
-      console.log(boatCount);
-      res.render('fleets/show', {fleet:fleet, users:users, login:true, userId:req.session.userId});
+      res.render('fleets/show', {boatCount: boatCount, fleet:fleet, users:users, login:true, userId:req.session.userId});
     });
   });
 };

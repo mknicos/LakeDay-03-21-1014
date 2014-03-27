@@ -2,21 +2,33 @@ extends ../shared/template
 
 block content
   .container
-    h2= boatCount
     .row
       .col-sm-4
         #fleetPic(style='background-image:url('+fleet.fleetFlag+')')
-      .col-sm-4
-        #fleetShowTitle
-          h1= fleet.fleetName
-            h3: small Nashville, TN
-      .col-sm-4
-    .row
-      .col-sm-4
         ul.list-group
           li.list-group-item
             <span class="badge">#{users.length}</span> Members
-      .col-sm-8
+          li.list-group-item
+            <span class="badge">#{boatCount}</span> Boats
+      .col-sm-4
+        #fleetShowTitle
+          h1.text-info= fleet.fleetName
+            h3: small.text-success Nashville, TN
+          div.well.well-sm= fleet.description
+      .col-sm-4
+    .row
+      .col-sm-10.col-sm-offset-1
+        #membersTitle
+          h2.text-warning Members
         each user in users
-          h4= user.userName
+          .col-sm-3
+            .oneUserFleetShow.panel.panel-warning
+              .panel-heading
+                a(href='/users/'+user._id.toString()).panel-title= user.userName
+              .panel-body
+                ul.listGroupFleetShow.list-group
+                  li.list-group-item: div.imgFleetShow(style='background-image:url('+user.userPhoto+')')
+                  li.list-group-item: a(href='mailto:#{user.email}')= user.email
+                  li.list-group-item Boats Owned: #{user.boatsOwned.length}
+      .col-sm-1
 

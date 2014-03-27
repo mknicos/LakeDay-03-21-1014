@@ -1,6 +1,8 @@
 extends ../shared/template
 
 block content
+
+  //--------------ADD BOAT FORM-------------------//
   .modal.fade.boatCreate-modal(tabindex='-1', role='dialog', aria-labelledby='boatCreateModal', aria-hidden='true')
     .modal-dialog
       .modal-content
@@ -35,17 +37,21 @@ block content
               a(href='#', type="button", data-dismiss="modal").btn.btn-default Close
               button.btn.btn-danger(type="submit") Add Boat
   .container
+
+    // if you attempt to add new boat, and fail ,display this alert//
     if newBoatFail
       .alert.alert-dismissable.alert-danger
         button.close(type='button', data-dismiss='alert') x
         h4 OOPS! That Boat Name already exists
+
+    //------------USERS BIO COLUMN-------------------//
     .row
       .col-sm-4
         #userPicColumn
           #userPic(style='background-image:url('+user.userPhoto+')')
           #userShowName
             h3= user.userName
-            h5: a(href='mailto:owner.email')= user.email
+            h5: a(href='mailto:#{user.email}')= user.email
           .panel.panel-info
             .panel-heading
               h3.panel-title Stats
@@ -55,9 +61,12 @@ block content
                   <span class="badge">#{boats.length}</span> Boats
                 li.list-group-item
                   <span class="badge">#{fleets.length}</span> Joined Fleets
-          .buttonsUserShow
-            button#boatCreateButton.btn.btn-primary.pull-left(data-toggle='modal', data-target='.boatCreate-modal') Add Boat
-            a#fleetLinkUserShow.btn.btn-primary.pull-right(href='/fleets') Join Fleet
+          if userHomePage
+            .buttonsUserShow
+              button#boatCreateButton.btn.btn-primary.pull-left(data-toggle='modal', data-target='.boatCreate-modal') Add Boat
+              a#fleetLinkUserShow.btn.btn-primary.pull-right(href='/fleets') Join Fleet
+
+      //--------BOATS THE USER OWNS-----------//
       .col-sm-7.col-sm-offset-1
         if boats.length == 0
           .userShowHeading
@@ -77,6 +86,8 @@ block content
                       li.list-group-item= boat.year
                       li.list-group-item= boat.make
                       //li.list-group-item= boat.boatType
+
+      //----------FLEETS THE USER HAS JOINED---------------//
       .col-sm-7.col-sm-offset-1
         if fleets.length == 0
           .userShowHeading

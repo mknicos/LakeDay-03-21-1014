@@ -12,7 +12,8 @@ module.exports = Fleet;
 function Fleet(fleet){
   this.fleetName = fleet.fleetName;
   this.users = [];
-  this.captain = fleet.captain;
+  this.captain = fleet.captain; // userMongoId
+  //this.captainName = fleet.captainName; //string of users name
   this.description = fleet.description;
 }
 
@@ -99,8 +100,6 @@ Fleet.prototype.addFlag = function(oldpath, fn){
   fs.renameSync(oldpath, abspath + relpath);
   this.fleetFlag = relpath;
   fleets.update({_id:this._id}, {$set: {fleetFlag:this.fleetFlag}}, function(err, count){
-    console.log('count after update');
-    console.log(count);
     fn(count);
   });
 };
@@ -115,10 +114,6 @@ Fleet.findUsers = function(fleetId, fn){
   //input->fleetId string
   //output->User objects in array
   Fleet.findById(fleetId, function(record){
-    console.log('fleetId');
-    console.log(fleetId);
-    console.log('record');
-    console.log(record);
     users.find({_id: {$in: record.users}}).toArray(function(err, users){
       fn(users);
     });

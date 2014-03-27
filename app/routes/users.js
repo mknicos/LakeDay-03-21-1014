@@ -78,7 +78,14 @@ exports.show = function(req, res){
   User.findById(req.params.id, function(user){
     Boat.findByOwnerId(req.session.userId, function(boats){
       User.findFleets(req.session.userId, function(fleets){
-        res.render('users/show', {user:user, boats:boats, fleets: fleets, login:true, newBoatFail:false});
+        var userHomePage;
+        if(req.session.userId === req.params.id){
+          userHomePage = true;
+        }else{
+          userHomePage = false;
+        }
+        console.log(userHomePage);
+        res.render('users/show', {userHomePage: userHomePage, user:user, boats:boats, fleets: fleets, login:true, newBoatFail:false});
       });
     });
   });

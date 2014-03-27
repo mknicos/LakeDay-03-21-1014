@@ -13,7 +13,7 @@ function Fleet(fleet){
   this.fleetName = fleet.fleetName;
   this.users = [];
   this.captain = fleet.captain; // userMongoId
-  //this.captainName = fleet.captainName; //string of users name
+  this.captainName = fleet.captainName; //string of users name
   this.description = fleet.description;
 }
 

@@ -4,6 +4,7 @@
 
 var Fleet = require('../models/fleet');
 var Mongo = require('mongodb');
+var users = global.nss.db.collection('users');
 
 exports.index = function(req, res){
   Fleet.findAll(function(records){
@@ -20,16 +21,19 @@ exports.index = function(req, res){
 
 exports.create = function(req, res){
   var captainId = new Mongo.ObjectID(req.body.captain);
-  req.body.captain = captainId;
-  var fleet = new Fleet(req.body);
-  fleet.insert(function(record){
-    if(record !== 'duplicate'){
-      fleet.addFlag(req.files.fleetFlag.path, function(count){
+  users.findOne({_id:captainId}, function(err, user){
+    req.body.captain = captainId;
+    req.body.captainName = user.userName;
+    var fleet = new Fleet(req.body);
+    fleet.insert(function(record){
+      if(record !== 'duplicate'){
+        fleet.addFlag(req.files.fleetFlag.path, function(count){
+          res.redirect('/users/'+req.session.userId);
+        });
+      }else{
         res.redirect('/users/'+req.session.userId);
-      });
-    }else{
-      res.redirect('/users/'+req.session.userId);
-    }
+      }
+    });
   });
 };
 

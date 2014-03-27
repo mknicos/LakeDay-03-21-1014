@@ -60,11 +60,7 @@ User.prototype.addPhoto = function(oldpath, fn){
   fs.renameSync(oldpath, abspath + relpath);
 
   this.userPhoto = relpath;
-  console.log('this._id');
-  console.log(this._id);
   users.update({_id:this._id}, {$set: {userPhoto:this.userPhoto}}, function(err, count){
-    console.log('count');
-    console.log(count);
     fn(count);
   });
 };

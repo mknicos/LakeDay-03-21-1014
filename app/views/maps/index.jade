@@ -1,0 +1,57 @@
+doctype html
+//[if IE 9]><html class="lt-ie10" lang="en" > <![endif]
+html(class='no-js', lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title= title
+    link(rel='stylesheet', href='/css/normalize.css')
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/less/app.css')
+    script(src='/js/vendor/modernizr.js')
+  body
+
+    //button.btn-info#updateSpeed SPEED
+    //input#inputSpeed(type='text')
+    #speedWrapper
+      button.btn-danger#stopWatch STOP
+      #speedControls
+        h3 Select Display
+        button.activeMeas.btn-success#changeToMPH MPH
+        button.btn-info#changeToKnots Knots
+        button.btn-success#changeToKPH KPH
+      #speedInteger
+      canvas#speedGauge
+
+      h3.maxSpeedTitle Max Speed
+      #maxSpeed 0
+
+    .main
+      h2 Device Orientation
+      table
+        tr
+          td EventSupported
+          td#doEvent
+        tr
+          td Tilt Left/Right [gamma]
+          td#doTiltLR
+        tr
+          td Tilt Front/Back [beta]
+          td#doTiltFB
+        tr
+          td Direction [alpha]
+          td#doDirection
+
+
+    div.container(style="perspective: 300;")
+    img(src="/img/dev/mario.png" id="imgLogo" class="logo")
+
+
+    script(src='/js/vendor/jquery.js')
+    script(src='/js/vendor/bootstrap.min.js', type='text/javascript')
+    script(src='/js/vendor/lodash.js')
+    script(src='/js/vendor/moment.js')
+    script(src='/js/vendor/gauge.min.js')
+    script(src='/js/source/map.js')
+    script(src='/js/source/compass.js')
+

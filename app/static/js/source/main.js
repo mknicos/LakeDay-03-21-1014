@@ -5,11 +5,7 @@
   $(document).ready(initialize);
 
   function initialize(){
-    //$(document).bootstrap();
-
     $('.userShowBoatToolTip').tooltip();
-
   }
-
 })();
 

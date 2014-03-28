@@ -17,6 +17,7 @@ function load(app, fn){
   var users = require('../routes/users');
   var boats = require('../routes/boats');
   var fleets = require('../routes/fleets');
+  var maps = require('../routes/maps');
 
 //-----home--------//
   app.get('/', d, home.index);
@@ -41,6 +42,9 @@ function load(app, fn){
   app.post('/fleets', d, fleets.create);
   app.get('/fleets/join/:fleetId', d, fleets.addUserToFleet);
   app.get('/fleets/:fleetId', d, fleets.show);
+
+//-----map---------//
+  app.get('/maps', d, maps.index);
 
   console.log('Routes Loaded');
   fn();

@@ -13,35 +13,41 @@ html(class='no-js', lang='en')
 
     //button.btn-info#updateSpeed SPEED
     //input#inputSpeed(type='text')
-    #speedWrapper
-      button.btn-danger#stopWatch STOP
-      #speedControls
-        h3 Select Display
-        button.activeMeas.btn-success#changeToMPH MPH
-        button.btn-info#changeToKnots Knots
-        button.btn-success#changeToKPH KPH
-      #speedInteger
-      canvas#speedGauge
+    .container
+      .row
+        .col-sm-3.col-sm-offset-3
+          #weatherWrapper
+            .panel.panel-warning
+              .panel-heading#weatherHeading
+                h3 Weather
+              .panel-body
+                ul.list-group
+                  div#weatherImg
+                  li.list-group-item Outside Temp
+                    span.badge#temp
+                  li.list-group-item Wind Direction
+                    span.badge#windDir
+                  li.list-group-item Wind Speed
+                    span.badge#windSpeed
+                  li.list-group-item Visibility
+                    span.badge#visibility
+        .col-sm-3
+          #speedWrapper
+            button.btn-danger#stopWatch STOP
+            #speedControls
+              h3 Select Display
+              button.activeMeas.btn-success#changeToMPH MPH
+              button.btn-info#changeToKnots Knots
+              button.btn-success#changeToKPH KPH
+            #speedInteger
+            canvas#speedGauge
 
-      h3.maxSpeedTitle Max Speed
-      #maxSpeed 0
-
-    .main
-      h2 Device Orientation
-      table
-        tr
-          td EventSupported
-          td#doEvent
-        tr
-          td Tilt Left/Right [gamma]
-          td#doTiltLR
-        tr
-          td Tilt Front/Back [beta]
-          td#doTiltFB
-        tr
-          td Direction [alpha]
-          td#doDirection
-
+            h3.maxSpeedTitle Max Speed
+            #maxSpeed 0
+            h3.maxSpeedTitle Tilt
+            #tilt 0
+       .col-sm-3
+         img(src='/img/dev/compass.png')#compass
 
     div.container(style="perspective: 300;")
     img(src="/img/dev/mario.png" id="imgLogo" class="logo")

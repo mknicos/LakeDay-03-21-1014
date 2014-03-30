@@ -1,4 +1,5 @@
 /* global Gauge: false */
+/* jshint camelcase: false */
 
 (function(){
 
@@ -19,26 +20,26 @@
   var currentSpeed = 0;
   var maxSpeed = 0;
   var convertUnit = 2.23694; //convert unit is used to change meters per sec to MPH
+  var weather = false;
 
 
   function getUserLocation(){
     var geoOptions = {enableHighAccuracy: true, maximumAge: 1000, timeout: 60000};
     watchID = navigator.geolocation.watchPosition(geoSuccess, geoError, geoOptions);
-    console.log(watchID);
-    console.log('watchID');
   }
 
   function geoSuccess(location){
-    console.log(location.coords.latitude, location.coords.longitude);
-    console.log('location.coords.speed');
-    console.log(location.coords.speed);
+    if(weather === false){
+      getWeather(location.coords.latitude, location.coords.longitude);
+      weather = true;
+    }
     if(location.coords.speed){
       currentSpeed = location.coords.speed;
       speedGauge();
-      $('#speedInteger').text(currentSpeed * convertUnit);
+      $('#speedInteger').text(Math.round(currentSpeed * convertUnit));
       if(currentSpeed > maxSpeed){
         maxSpeed = currentSpeed;
-        $('#maxSpeed').text(maxSpeed * convertUnit);
+        $('#maxSpeed').text(Math.round(maxSpeed * convertUnit));
       }
     }else{
       $('#speedInteger').text(0);
@@ -48,11 +49,11 @@
   }
 
   function geoError(){
-    alert('fail');
+    alert('Your Location Can not be found');
   }
 
   function stopWatchingLoc(){
-    alert('your location has been stopped');
+    alert('your location is no longer being watched');
   }
 
 
@@ -112,5 +113,24 @@
     $('#speedInteger').text(currentSpeed * convertUnit);
   }
 
+
+  //----------------Weather----------------------//
+
+  function getWeather(weatherLat, weatherLng){
+    console.log(weatherLat, weatherLng);
+    console.log('weatherLat, weatherLng');
+    var url = 'http://api.worldweatheronline.com/free/v1/weather.ashx?callback=?&q='+weatherLat+','+weatherLng+'&format=json&key=23z8a5ra2k4akvhv2wdzr4cg';
+    $.getJSON(url, successWeather);
+  }
+
+  function successWeather(data){
+    var source = data.data.current_condition[0];
+    console.log(source.weatherIconUrl[0].value);
+    $('#weatherImg').css('background-image', 'url('+source.weatherIconUrl[0].value+')');
+    $('#temp').text(source.temp_F+' F');
+    $('#windDir').text(source.winddir16Point);
+    $('#windSpeed').text(source.windspeedMiles+' MPH');
+    $('#visibility').text(source.visibility+' km');
+  }
 })();
 

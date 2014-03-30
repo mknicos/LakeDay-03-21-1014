@@ -6,14 +6,54 @@
 
 
   function initialize(){
-    startCompass();
+    //startCompass();
+    startCompass2();
   }
 
+  function startCompass2(){
+    var compass = document.getElementById('compass');
+    if(window.DeviceOrientationEvent){
+      window.addEventListener('deviceorientation', function(event){
+        var alpha;
+        var webkitAlpha;
+        if(event.webkitCompassHeading){
+          // for iOS
+          
+          alpha = event.webkitCompassHeading;
+          compass.style.WebkitTransform = 'rotate(-' + alpha + 'deg)';
+
+        }else{
+          //for anything but iOS
+          alpha = event.alpha;
+          webkitAlpha = alpha;
+          if(!window.chrome){
+            //For Android Stock browser
+            webkitAlpha = alpha - 270;
+          }
+        }
+        compass.style.Transform = 'rotate(' + alpha + 'deg)';
+        compass.style.WebkitTransform = 'rotate(' + webkitAlpha + 'deg)';
+
+        //In firefox, reverse degree rotation
+        compass.style.MozTransform = 'rotate(-' + alpha + 'deg)';
+      }, false);
+    }else{
+      alert('Your device is not compatable');
+    }
+  }
+
+
+
+
+/*
   function startCompass(){
     if(window.DeviceOrientationEvent){
       document.getElementById('doEvent').innerHTML = 'DeviceOrientation';
 
       window.addEventListener('deviceorientation', function(eventData){
+        console.log('eventData');
+        console.log(eventData);
+        debugger;
         var tiltLR = eventData.gamma;
         // gamma is left-to-right tile in degrees
 
@@ -42,6 +82,6 @@
     logo.style.MozTransform = 'rotate('+ tiltLR + 'deg)';
     logo.style.transform = 'rotate('+ tiltLR +'deg) rotate3d(1,0,0, ' + (tiltFB*-1) +'deg)';
   }
-
+*/
 })();
 

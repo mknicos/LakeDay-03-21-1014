@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "start"     : "node app/app.js",
-    "test"      : "mocha --recursive test",
+    "test"      : "mocha -t 10000 --recursive test",
     "testwatch" : "mocha -w --recursive test",
     "coveralls" : "./node_modules/mocha/bin/mocha test --recursive -r blanket -R mocha-lcov-reporter | coveralls"
   },

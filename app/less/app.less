@@ -198,7 +198,6 @@
 
 #maxSpeed{
   font-size: 3rem;
-  color: red;
   margin: auto;
 }
 
@@ -240,9 +239,33 @@
   padding: 5px;
 }
 
-#compass{
-  width: 100%;
+#compassWrapper{
+  position: relative;
+  left: 14%;
+}
+
+#compassWrapper *{
+  position: absolute;
+}
+
+#needle{
   transform-origin: 50% 50%;
   -webkit-transform-origin: 50% 50%;
   -mozkit-transform-origin: 50% 50%;
+}
+
+.outerCompass{
+  text-align: center;
+}
+
+#goHome{
+  margin: 10px;
+}
+
+#weatherWrapper{
+  text-align: center;
+}
+
+#stopWatch{
+  margin: 10px;
 }

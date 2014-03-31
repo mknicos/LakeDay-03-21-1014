@@ -15,8 +15,9 @@ html(class='no-js', lang='en')
     //input#inputSpeed(type='text')
     .container
       .row
-        .col-sm-3.col-sm-offset-3
+        .col-sm-3.col-sm-offset-1
           #weatherWrapper
+            a(href='/')#goHome.btn.btn-success Home
             .panel.panel-warning
               .panel-heading#weatherHeading
                 h3 Weather
@@ -31,9 +32,9 @@ html(class='no-js', lang='en')
                     span.badge#windSpeed
                   li.list-group-item Visibility
                     span.badge#visibility
-        .col-sm-3
+        .col-sm-4
           #speedWrapper
-            button.btn-danger#stopWatch STOP
+            button.btn.btn-danger#stopWatch STOP
             #speedControls
               h3 Select Display
               button.activeMeas.btn-success#changeToMPH MPH
@@ -43,15 +44,14 @@ html(class='no-js', lang='en')
             canvas#speedGauge
 
             h3.maxSpeedTitle Max Speed
-            #maxSpeed 0
-            h3.maxSpeedTitle Tilt
-            #tilt 0
-       .col-sm-3
-         img(src='/img/dev/compass.png')#compass
-
-    div.container(style="perspective: 300;")
-    img(src="/img/dev/mario.png" id="imgLogo" class="logo")
-
+            #maxSpeed.text-danger 0
+        .col-sm-3
+          .outerCompass
+            h3.maxSpeedTitle Heel(tilt angle)
+            h2#tilt.text-danger 0
+          #compassWrapper
+            img(src='/img/dev/compass2.png')#compass
+            img(src='/img/dev/needle.png')#needle
 
     script(src='/js/vendor/jquery.js')
     script(src='/js/vendor/bootstrap.min.js', type='text/javascript')

@@ -10,17 +10,29 @@
     startCompass2();
   }
 
+  var gammaCounter = 0; //a way to reduce sensitivity of gamma calculations, less annoying;
+
   function startCompass2(){
-    var compass = document.getElementById('compass');
+    var needle = document.getElementById('needle');
     if(window.DeviceOrientationEvent){
       window.addEventListener('deviceorientation', function(event){
         var alpha;
         var webkitAlpha;
+        var gamma = event.gamma;
+
+      //ADJUST SENSITIVITY OF TILT BELOW
+      
+        if(gammaCounter > 10){
+          $('#tilt').text(Math.round(gamma));
+          gammaCounter = 0;
+        }else{
+          gammaCounter = gammaCounter + 1;
+        }
         if(event.webkitCompassHeading){
           // for iOS
           
           alpha = event.webkitCompassHeading;
-          compass.style.WebkitTransform = 'rotate(-' + alpha + 'deg)';
+          needle.style.WebkitTransform = 'rotate(-' + alpha + 'deg)';
 
         }else{
           //for anything but iOS
@@ -31,11 +43,11 @@
             webkitAlpha = alpha - 270;
           }
         }
-        compass.style.Transform = 'rotate(' + alpha + 'deg)';
-        compass.style.WebkitTransform = 'rotate(' + webkitAlpha + 'deg)';
+        needle.style.Transform = 'rotate(' + alpha + 'deg)';
+        needle.style.WebkitTransform = 'rotate(' + webkitAlpha + 'deg)';
 
         //In firefox, reverse degree rotation
-        compass.style.MozTransform = 'rotate(-' + alpha + 'deg)';
+        needle.style.MozTransform = 'rotate(-' + alpha + 'deg)';
       }, false);
     }else{
       alert('Your device is not compatable');

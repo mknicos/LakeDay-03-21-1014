@@ -39,6 +39,14 @@ describe('users', function(){
     });
   });
 
+  describe('GET /maps', function(){
+    it('should display the home page', function(done){
+      request(app)
+      .get('/maps')
+      .expect(200, done);
+    });
+  });
+
   describe('POST /register', function(){
     before(function(done){
       var testdir = __dirname + '/../../app/static/img/users/test*';

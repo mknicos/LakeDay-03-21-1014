@@ -3,6 +3,9 @@ NSS Cohort 4 Mid Term Project
 It's A Lake Day
 ---------------
 
+### See It Live
+[It's A Lake Day](http://lakeday.mattknicos.net/)
+
 ### Cloud Testing Badges
 [![Build Status](https://travis-ci.org/mknicos/LakeDay-03-21-1014.svg?branch=master)](https://travis-ci.org/mknicos/LakeDay-03-21-1014)
 [![Dependency Status](https://gemnasium.com/mknicos/LakeDay-03-21-1014.svg)](https://gemnasium.com/mknicos/LakeDay-03-21-1014)

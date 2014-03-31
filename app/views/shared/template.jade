@@ -50,12 +50,10 @@ html(class='no-js', lang='en')
               a.dropdow-toggle(href='#', data-toggle='dropdown') Navigate <b class="caret"></b>
               ul.dropdown-menu
                 li: a(href='/fleets') View Fleets
-                li: a(href='#') Action2
-                li: a(href='#') Action3
                 li.divider
-                li: a(href='#') Action4
-                li.divider
-                li: a(href='#') Action4
+                li: a(href='/maps') On The Lake
+                if userId
+                  li: a(href='/users/'+userId) Profile
           .nav.navbar-nav.navbar-right
             if login == false
               button.btn.btn-primary.dropdown-toggle(data-toggle='dropdown') User

@@ -61,13 +61,13 @@ About The App
 
 ### Compass/Speedometer/Tilt References
 
--[Wes Bos](http://wesbos.com/talks/jqueryto/#1 )
--[Google Develepors Academy](https://developers.google.com/academy/)
--[Dive Into HTML5 Geolocation](http://diveintohtml5.info/geolocation.html)
--[Geek's Retreet](http://geeksretreat.wordpress.com/2012/05/09/html-5-canvas-an-animated-compass/)
--[Mozilla Geolocation](https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation)
--[MobiForge](http://mobiforge.com/design-development/html5-mobile-web-device-orientation-events)
--[Adobe Blogs](http://blogs.adobe.com/cantrell/archives/2012/03/accessing-the-accelerometer-and-gyroscope-in-javascript.html)
+- [Wes Bos](http://wesbos.com/talks/jqueryto/#1 )
+- [Google Develepors Academy](https://developers.google.com/academy/)
+- [Dive Into HTML5 Geolocation](http://diveintohtml5.info/geolocation.html)
+- [Geek's Retreet](http://geeksretreat.wordpress.com/2012/05/09/html-5-canvas-an-animated-compass/)
+- [Mozilla Geolocation](https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation)
+- [MobiForge](http://mobiforge.com/design-development/html5-mobile-web-device-orientation-events)
+- [Adobe Blogs](http://blogs.adobe.com/cantrell/archives/2012/03/accessing-the-accelerometer-and-gyroscope-in-javascript.html)
 
 
 ### Future Updates

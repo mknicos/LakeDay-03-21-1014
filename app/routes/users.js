@@ -21,7 +21,7 @@ exports.create = function(req, res){
   
     //if fail//
 exports.failRegister = function(req, res){
-  res.render('home/index', {title: 'It\'s A Lake Day', registerFail: true});
+  res.render('home/index', {login: false, title: 'It\'s A Lake Day', registerFail: true});
 };
     //if success//
 exports.successRegister = function(req, res){
@@ -55,7 +55,7 @@ exports.authenticate = function(req, res){
 
      //if fail login//
 exports.failLogin = function(req, res){
-  res.render('home/index', {title: 'It\'s A Lake Day', logInFail:true});
+  res.render('home/index', {login: false, title: 'It\'s A Lake Day', logInFail:true});
 };
     //if success login//
 exports.successLogin = function(req, res){
@@ -73,18 +73,19 @@ exports.successLogin = function(req, res){
 //need to be logged in to see//
 
 exports.show = function(req, res){
-  console.log('req.params');
-  console.log(req.params);
+  console.log(req.session.userId);
   User.findById(req.params.id, function(user){
-    Boat.findByOwnerId(req.session.userId, function(boats){
-      User.findFleets(req.session.userId, function(fleets){
+    console.log(user.userName);
+    console.log(user);
+    Boat.findByOwnerId(user._id.toString(), function(boats){
+      console.log(boats);
+      User.findFleets(user._id.toString(), function(fleets){
         var userHomePage;
         if(req.session.userId === req.params.id){
           userHomePage = true;
         }else{
           userHomePage = false;
         }
-        console.log(userHomePage);
         res.render('users/show', {userHomePage: userHomePage, user:user, boats:boats, fleets: fleets, login:true, newBoatFail:false});
       });
     });

@@ -15,29 +15,30 @@ About The App
 - Connect With Other Boaters around you
 - Build your profile, and arrange boat outings
 - Become a captain and start a fleet
-- Relive past trips and see your soggy breadcrumbs you'vw left behind
+-Future Update (premium users) can save their trips, for viewing later
 
 ### When It IS a lake day
 
-- See others on the same lake as you on your phone
-- Chart their locations and chat in real time
-- Track yourself and save your trips for later
-
-### Performance
-- See Your heading, speed, and location in real time
-- Improve your sailing speed, kayak speed, and gain badges
+- A copmletely in broswer speedometer
+- A 360 degree realtime compass, no movement needed
+- Improve your sailing speed, kayak speed
+- Get current weather conditions without pressing a button
 
 ### How the app is built
 
-- Full stack javascript... MEAN stack without angular...Call it what you want
-- Express node framework
+- Browser Device Oientation Events
+- Navigator Geolocation Events
+- Full stack javascript
+- Express framework
 - MongoDB database
 - Grunt
 - Redis
 - Bcrypt
-- Foundation
+- Twitter Bootstrap
 - Jade
 - Less
+- Canvas Elements
+- Mobile First Design
 
 #### Tested With
 
@@ -54,3 +55,16 @@ About The App
 - moment.js
 - Lo-Dash
 - JQuery
+- [Gauge.js](https://github.com/bernii/gauge.js)
+- World Weather Online API
+
+### Compass/Speedometer/Tilt References
+
+-[Wes Bos](http://wesbos.com/talks/jqueryto/#1 )
+-[Google Develepors Academy](https://developers.google.com/academy/)
+-[Dive Into HTML5 Geolocation](http://diveintohtml5.info/geolocation.html)
+-[Geek's Retreet](http://geeksretreat.wordpress.com/2012/05/09/html-5-canvas-an-animated-compass/)
+-[Mozilla Geolocation](https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation)
+-[MobiForge](http://mobiforge.com/design-development/html5-mobile-web-device-orientation-events)
+-[Adobe Blogs](http://blogs.adobe.com/cantrell/archives/2012/03/accessing-the-accelerometer-and-gyroscope-in-javascript.html)
+o

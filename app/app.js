@@ -1,7 +1,7 @@
 'use strict';
 
-var dbname = process.env.DBNAME;
-var port = process.env.PORT || 4000;
+var dbname = 'lakeDay';
+var port = 3007;
 
 var express    = require('express');
 var less       = require('express-less');
